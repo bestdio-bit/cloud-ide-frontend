@@ -1,112 +1,109 @@
 import React from "react";
 
-export default function MarketingNavbar({ currentView, setCurrentView }) {
+export default function MarketingNavbar({ currentView, setCurrentView, onOpenDownload }) {
   const navItems = [
-    { id: "landing", label: "Home" },
+    { id: "landing", label: "Overview" },
     { id: "features", label: "Features" },
-    { id: "templates", label: "Templates & Showcase" },
+    { id: "templates", label: "Templates" },
     { id: "pricing", label: "Pricing" },
+    { id: "docs", label: "Docs" },
     { id: "about", label: "About" },
-    { id: "docs", label: "Documentation" }
   ];
-
-  const handleDownloadApp = () => {
-    if (window.deferredPrompt) {
-      window.deferredPrompt.prompt();
-      window.deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("User accepted the install prompt");
-        }
-        window.deferredPrompt = null;
-      });
-    } else {
-      alert("📥 To install PulseIDE on your Phone or Laptop:\n\n• Phone (iOS/Android): Tap 'Share' or 'Menu' (⋮) -> 'Add to Home Screen'\n• Laptop (Chrome/Edge): Click the Install icon (💻/➕) in your browser's address bar!\n\nOnce installed, launching the app opens directly into the IDE workspace!");
-    }
-  };
 
   return (
     <header className="glass-header" style={{
       position: "sticky",
       top: 0,
       zIndex: 1000,
-      padding: "16px 0"
+      height: "72px",
+      display: "flex",
+      alignItems: "center"
     }}>
       <div className="marketing-container" style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: "16px"
+        width: "100%"
       }}>
-        {/* Brand */}
-        <div 
+        {/* Brand Logo: Tilde (~ ) */}
+        <div
           onClick={() => setCurrentView("landing")}
           style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }}
         >
           <div style={{
-            background: "linear-gradient(135deg, var(--bestdio-emerald), var(--bestdio-cyan))",
-            width: "42px",
-            height: "42px",
-            borderRadius: "12px",
+            background: "linear-gradient(135deg, #38bdf8, #818cf8, #c084fc)",
+            width: "38px",
+            height: "38px",
+            borderRadius: "10px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             fontSize: "22px",
-            fontWeight: 800,
+            fontWeight: 900,
             color: "#000",
-            boxShadow: "0 4px 15px rgba(16, 185, 129, 0.4)"
+            boxShadow: "0 0 20px rgba(56, 189, 248, 0.4)"
           }}>
-            ⚡
+            ~
           </div>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span style={{ fontSize: "20px", fontWeight: 900, letterSpacing: "-0.5px", color: "#fff" }}>
-                PulseIDE
-              </span>
-            </div>
-            <div style={{ fontSize: "10px", color: "var(--bestdio-emerald)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "1px" }}>
-              by Bestdio Company
-            </div>
+            <span style={{ fontSize: "20px", fontWeight: 900, letterSpacing: "-0.5px", color: "#fff" }}>
+              Tilde
+            </span>
+            <span style={{
+              background: "rgba(56, 189, 248, 0.15)",
+              color: "#38bdf8",
+              fontSize: "10px",
+              fontWeight: 800,
+              padding: "2px 6px",
+              borderRadius: "4px",
+              marginLeft: "8px",
+              border: "1px solid rgba(56, 189, 248, 0.3)"
+            }}>
+              CLOUD TTY
+            </span>
           </div>
         </div>
 
-        {/* Nav Links */}
-        <nav style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setCurrentView(item.id)}
-              style={{
-                background: currentView === item.id ? "rgba(0, 242, 254, 0.15)" : "transparent",
-                color: currentView === item.id ? "var(--bestdio-cyan)" : "var(--text-muted)",
-                border: currentView === item.id ? "1px solid rgba(0, 242, 254, 0.3)" : "1px solid transparent",
-                padding: "8px 14px",
-                borderRadius: "8px",
-                fontSize: "13px",
-                fontWeight: currentView === item.id ? 700 : 500,
-                cursor: "pointer",
-                transition: "all 0.2s"
-              }}
-            >
-              {item.label}
-            </button>
-          ))}
+        {/* Navigation Links */}
+        <nav className="desktop-only" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          {navItems.map((item) => {
+            const isActive = currentView === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setCurrentView(item.id)}
+                style={{
+                  background: isActive ? "rgba(56, 189, 248, 0.15)" : "transparent",
+                  color: isActive ? "#38bdf8" : "var(--text-muted)",
+                  border: isActive ? "1px solid rgba(56, 189, 248, 0.3)" : "1px solid transparent",
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: isActive ? 700 : 500,
+                  cursor: "pointer",
+                  transition: "all 0.2s"
+                }}
+              >
+                {item.label}
+              </button>
+            );
+          })}
         </nav>
 
-        {/* Action Buttons */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+        {/* CTA Buttons */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <button
-            onClick={handleDownloadApp}
+            onClick={onOpenDownload}
             className="btn btn-secondary"
             style={{ padding: "8px 16px", fontSize: "13px", fontWeight: 700 }}
-            title="Install PulseIDE on phone or laptop"
+            title="Download & Install Tilde App"
           >
-            <span>📥 Download App</span>
+            <span>📥 Install App</span>
           </button>
           <button
             onClick={() => setCurrentView("ide")}
-            className="btn btn-bestdio"
-            style={{ padding: "10px 22px", fontSize: "14px" }}
+            className="btn btn-primary"
+            style={{ padding: "8px 20px", fontSize: "13px", fontWeight: 800 }}
           >
             <span>⚡ Launch IDE</span>
           </button>

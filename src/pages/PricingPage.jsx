@@ -3,94 +3,89 @@ import React from "react";
 export default function PricingPage({ setCurrentView }) {
   return (
     <div className="animate-fade-in" style={{ padding: "60px 0 100px" }}>
-      <div className="marketing-container">
+      <div className="marketing-container" style={{ maxWidth: "960px" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "60px", maxWidth: "800px", margin: "0 auto" }}>
-          <div className="bestdio-badge" style={{ marginBottom: "16px" }}>
-            💎 ZERO COST PHILOSOPHY
+        <div style={{ textAlign: "center", marginBottom: "60px" }}>
+          <div className="tilde-badge" style={{ marginBottom: "16px" }}>
+            <span>💎 ZERO-COST DEVELOPER ECOSYSTEM</span>
           </div>
           <h1 style={{ fontSize: "42px", fontWeight: 900, color: "#fff", marginBottom: "20px" }}>
-            100% Free Forever. <br />
-            <span className="hero-gradient-text">No Paywalls. No Limits.</span>
+            Transparent, <span className="hero-gradient-text">100% Free</span> Cloud TTY
           </h1>
-          <p style={{ fontSize: "18px", color: "var(--text-muted)", lineHeight: "1.6" }}>
-            We believe access to high-performance computing and developer tools should be universal. 
-            That is why <strong>PulseIDE</strong> is completely free for all developers, students, and engineers.
+          <p style={{ fontSize: "18px", color: "var(--text-muted)", maxWidth: "700px", margin: "0 auto", lineHeight: "1.6" }}>
+            We believe access to high-performance programming environments should never be gated by paywalls or hardware limitations.
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "30px",
-          maxWidth: "1000px",
-          margin: "0 auto 80px"
-        }}>
-          {/* Free Forever Plan */}
+        {/* Pricing Card Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "28px", marginBottom: "60px" }}>
+          {/* Free Forever Tier */}
           <div className="glass-card" style={{
             padding: "40px",
-            border: "2px solid var(--bestdio-cyan)",
+            border: "2px solid var(--tilde-cyan)",
+            boxShadow: "0 0 40px rgba(56, 189, 248, 0.2)",
             position: "relative",
-            background: "linear-gradient(180deg, rgba(0, 242, 254, 0.08), rgba(15, 23, 42, 0.6))"
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between"
           }}>
             <div style={{
               position: "absolute",
-              top: "-14px",
-              right: "30px",
-              background: "linear-gradient(135deg, var(--bestdio-emerald), var(--bestdio-cyan))",
+              top: "-12px",
+              right: "24px",
+              background: "linear-gradient(135deg, #38bdf8, #818cf8)",
               color: "#000",
               fontWeight: 900,
-              fontSize: "12px",
-              padding: "4px 14px",
-              borderRadius: "20px",
-              textTransform: "uppercase",
-              letterSpacing: "1px"
+              fontSize: "11px",
+              padding: "4px 12px",
+              borderRadius: "12px",
+              letterSpacing: "0.5px"
             }}>
-              RECOMMENDED FOR EVERYONE
+              COMMUNITY STANDARD
             </div>
 
-            <h3 style={{ fontSize: "24px", fontWeight: 800, color: "#fff", marginBottom: "8px" }}>
-              PulseIDE Cloud Workspace
-            </h3>
-            <p style={{ fontSize: "14px", color: "var(--text-muted)", marginBottom: "24px" }}>
-              Full access to our interactive multi-language terminal streams and Docker sandbox.
-            </p>
+            <div>
+              <h3 style={{ fontSize: "24px", fontWeight: 900, color: "#fff", marginBottom: "8px" }}>
+                Tilde Cloud Workspace
+              </h3>
+              <p style={{ fontSize: "14px", color: "var(--text-muted)", marginBottom: "24px" }}>
+                Full access to interactive Linux terminals, all 10+ compilers, and zero-latency WebSocket streaming.
+              </p>
+              <div style={{ fontSize: "48px", fontWeight: 900, color: "#fff", marginBottom: "24px", display: "flex", alignItems: "baseline", gap: "6px" }}>
+                <span>$0</span>
+                <span style={{ fontSize: "16px", color: "var(--text-muted)", fontWeight: 500 }}>/ forever</span>
+              </div>
 
-            <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "30px" }}>
-              <span style={{ fontSize: "56px", fontWeight: 900, color: "#fff" }}>$0</span>
-              <span style={{ fontSize: "16px", color: "var(--text-muted)", fontWeight: 600 }}>/ forever</span>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "16px", marginBottom: "36px", fontSize: "14px", color: "var(--text-main)" }}>
+                <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "var(--tilde-cyan)", fontWeight: 800 }}>✓</span>
+                  <span><strong>Unlimited</strong> interactive terminal sessions</span>
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "var(--tilde-cyan)", fontWeight: 800 }}>✓</span>
+                  <span><strong>10+ Compilers:</strong> Python, C++, Java, Rust, Go & more</span>
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "var(--tilde-cyan)", fontWeight: 800 }}>✓</span>
+                  <span><strong>Bidirectional TTY:</strong> Supports <code style={{ color: "#38bdf8" }}>input()</code> & <code style={{ color: "#38bdf8" }}>cin</code></span>
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "var(--tilde-cyan)", fontWeight: 800 }}>✓</span>
+                  <span><strong>Standalone App:</strong> Install on Phone & Laptop</span>
+                </li>
+                <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ color: "var(--tilde-cyan)", fontWeight: 800 }}>✓</span>
+                  <span><strong>Zero Ads:</strong> Clean, distraction-free IDE</span>
+                </li>
+              </ul>
             </div>
-
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "16px", marginBottom: "40px", fontSize: "15px", color: "var(--text-main)" }}>
-              <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>✓</span>
-                <span><strong>All 10+ Programming Languages</strong> (Python, C++, Rust, Go, Java...)</span>
-              </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>✓</span>
-                <span><strong>Real-Time TTY Streams</strong> (Interactive stdin/stdout/stderr)</span>
-              </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>✓</span>
-                <span><strong>Docker Linux Sandboxing</strong> (Debian container isolation)</span>
-              </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>✓</span>
-                <span><strong>Phone & Laptop Download</strong> (Standalone PWA Launcher)</span>
-              </li>
-              <li style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>✓</span>
-                <span><strong>Zero Credit Card Required</strong> (No signup walls)</span>
-              </li>
-            </ul>
 
             <button
               onClick={() => setCurrentView("ide")}
-              className="btn btn-bestdio"
-              style={{ width: "100%", padding: "16px", fontSize: "16px", fontWeight: 800, justifyContent: "center" }}
+              className="btn btn-primary animate-glow"
+              style={{ width: "100%", padding: "16px", fontSize: "16px", fontWeight: 800 }}
             >
-              <span>⚡ Start Coding Now — It's Free</span>
+              <span>⚡ Open Free Workspace</span>
             </button>
           </div>
 
@@ -111,10 +106,31 @@ export default function PricingPage({ setCurrentView }) {
                 <span style={{ color: "var(--text-main)" }}>Replit Core</span>
                 <span style={{ color: "#f87171", fontWeight: 700 }}>$20 / month</span>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", padding: "12px", background: "rgba(0, 242, 254, 0.1)", border: "1px solid var(--bestdio-cyan)", borderRadius: "8px" }}>
-                <span style={{ color: "#fff", fontWeight: 800 }}>⚡ PulseIDE</span>
-                <span style={{ color: "var(--bestdio-emerald)", fontWeight: 800 }}>100% Free Forever</span>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: "12px", background: "rgba(56, 189, 248, 0.1)", border: "1px solid var(--tilde-cyan)", borderRadius: "8px" }}>
+                <span style={{ color: "#fff", fontWeight: 800 }}>~ Tilde Workspace</span>
+                <span style={{ color: "#34d399", fontWeight: 800 }}>100% Free Forever</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="glass-card" style={{ padding: "48px" }}>
+          <h3 style={{ fontSize: "24px", fontWeight: 800, color: "#fff", marginBottom: "24px", textAlign: "center" }}>
+            Frequently Asked Questions
+          </h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "28px" }}>
+            <div>
+              <h4 style={{ color: "#fff", fontSize: "16px", fontWeight: 700, marginBottom: "8px" }}>How can Tilde remain 100% free?</h4>
+              <p style={{ color: "var(--text-muted)", fontSize: "14px", lineHeight: "1.6", margin: 0 }}>
+                We utilize ephemeral Docker container pooling with aggressive idle timeouts (60s) and lightweight Linux Alpine base images. This keeps cloud compute overhead minimal while guaranteeing instant startup speeds.
+              </p>
+            </div>
+            <div>
+              <h4 style={{ color: "#fff", fontSize: "16px", fontWeight: 700, marginBottom: "8px" }}>Do I need to create an account?</h4>
+              <p style={{ color: "var(--text-muted)", fontSize: "14px", lineHeight: "1.6", margin: 0 }}>
+                No! You can launch immediately into the IDE and execute interactive code without signing up or providing any personal information.
+              </p>
             </div>
           </div>
         </div>

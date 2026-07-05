@@ -3,106 +3,96 @@ import React from "react";
 export default function MarketingFooter({ setCurrentView }) {
   return (
     <footer style={{
-      background: "var(--bg-surface)",
+      background: "#030508",
       borderTop: "1px solid var(--border)",
       padding: "60px 0 40px",
-      marginTop: "80px"
+      color: "var(--text-muted)",
+      fontSize: "14px"
     }}>
-      <div className="marketing-container">
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "40px",
-          marginBottom: "40px"
-        }}>
-          {/* Brand Col */}
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-              <div style={{
-                background: "linear-gradient(135deg, var(--bestdio-emerald), var(--bestdio-cyan))",
-                width: "32px",
-                height: "32px",
-                borderRadius: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "18px",
-                fontWeight: 800,
-                color: "#000"
-              }}>
-                ⚡
-              </div>
-              <span style={{ fontSize: "18px", fontWeight: 800, color: "#fff" }}>
-                PulseIDE
-              </span>
+      <div className="marketing-container" style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gap: "40px",
+        marginBottom: "60px"
+      }}>
+        {/* Brand Col */}
+        <div>
+          <div
+            onClick={() => setCurrentView("landing")}
+            style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px", cursor: "pointer" }}
+          >
+            <div style={{
+              background: "linear-gradient(135deg, #38bdf8, #818cf8, #c084fc)",
+              width: "32px",
+              height: "32px",
+              borderRadius: "8px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "18px",
+              fontWeight: 900,
+              color: "#000"
+            }}>
+              ~
             </div>
-            <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: "1.6", marginBottom: "16px" }}>
-              The flagship interactive cloud development environment. Engineered for zero-latency terminal streaming.
-            </p>
-            <div className="bestdio-badge" style={{ fontSize: "11px" }}>
-              🟢 100% Free Architecture
-            </div>
+            <span style={{ fontSize: "18px", fontWeight: 900, color: "#fff", letterSpacing: "-0.5px" }}>
+              Tilde
+            </span>
           </div>
-
-          {/* Product Col */}
-          <div>
-            <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#fff", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              Product
-            </h4>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px" }}>
-              <li><button onClick={() => setCurrentView("features")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Core Features</button></li>
-              <li><button onClick={() => setCurrentView("templates")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: "0" }}>Code Templates & Showcase</button></li>
-              <li><button onClick={() => setCurrentView("pricing")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Free Forever Pricing</button></li>
-              <li><button onClick={() => setCurrentView("ide")} style={{ background: "none", border: "none", color: "var(--bestdio-cyan)", fontWeight: 600, cursor: "pointer", padding: 0 }}>⚡ Launch PulseIDE</button></li>
-            </ul>
-          </div>
-
-          {/* Company Col */}
-          <div>
-            <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#fff", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              Parent Company
-            </h4>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px" }}>
-              <li><button onClick={() => setCurrentView("about")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>About PulseIDE</button></li>
-              <li><a href="https://bestdio.in" target="_blank" rel="noreferrer" style={{ color: "var(--bestdio-cyan)", textDecoration: "none", fontWeight: 600 }}>Navigate to bestdio.in</a></li>
-              <li><a href="https://github.com/bestdio-bit" target="_blank" rel="noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>GitHub Organization</a></li>
-              <li><button onClick={() => setCurrentView("docs")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Documentation & Tutorials</button></li>
-            </ul>
-          </div>
-
-          {/* Architecture Col */}
-          <div>
-            <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#fff", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              Tech Stack
-            </h4>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px", color: "var(--text-faint)" }}>
-              <li>🐳 Docker Sandbox (Debian Linux)</li>
-              <li>⚡ Socket.io Real-Time Stream</li>
-              <li>💻 Monaco Editor & CodeMirror</li>
-              <li>📱 PWA Standalone App Support</li>
-            </ul>
-          </div>
+          <p style={{ fontSize: "13px", lineHeight: "1.6", color: "var(--text-faint)", margin: 0 }}>
+            An interactive multi-language cloud workspace and pseudo-terminal engine. Engineered for zero setup latency and high-performance execution.
+          </p>
         </div>
 
-        <div style={{
-          borderTop: "1px solid var(--border)",
-          paddingTop: "24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "16px",
-          fontSize: "12px",
-          color: "var(--text-faint)"
-        }}>
-          <div>
-            © {new Date().getFullYear()} <strong>PulseIDE</strong>. All rights reserved. An application under <strong>Bestdio Company</strong> (<a href="https://bestdio.in" target="_blank" rel="noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>bestdio.in</a>).
-          </div>
-          <div style={{ display: "flex", gap: "20px" }}>
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Security Sandbox Policy</span>
-          </div>
+        {/* Product Links */}
+        <div>
+          <h4 style={{ color: "#fff", fontSize: "14px", fontWeight: 700, marginBottom: "16px" }}>Workspace</h4>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
+            <li><button onClick={() => setCurrentView("ide")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Launch IDE ⚡</button></li>
+            <li><button onClick={() => setCurrentView("features")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Architecture</button></li>
+            <li><button onClick={() => setCurrentView("templates")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Starter Code</button></li>
+            <li><button onClick={() => setCurrentView("pricing")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Pricing & Quotas</button></li>
+          </ul>
+        </div>
+
+        {/* Resources */}
+        <div>
+          <h4 style={{ color: "#fff", fontSize: "14px", fontWeight: 700, marginBottom: "16px" }}>Resources</h4>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
+            <li><button onClick={() => setCurrentView("docs")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Documentation</button></li>
+            <li><button onClick={() => setCurrentView("about")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>About Tilde</button></li>
+            <li><a href="https://github.com/bestdio-bit/cloud-ide-frontend" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>GitHub Repository</a></li>
+          </ul>
+        </div>
+
+        {/* Tech Stack */}
+        <div>
+          <h4 style={{ color: "#fff", fontSize: "14px", fontWeight: 700, marginBottom: "16px" }}>Engine Specs</h4>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "8px", fontSize: "12px", color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+            <li>• Node.js + Socket.io</li>
+            <li>• node-pty Linux TTY</li>
+            <li>• Ephemeral Docker Sandbox</li>
+            <li>• Monaco & CodeMirror Engines</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Bottom Bar: ONLY Bestdio Mention */}
+      <div className="marketing-container" style={{
+        borderTop: "1px solid rgba(255, 255, 255, 0.05)",
+        paddingTop: "24px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        gap: "16px",
+        fontSize: "13px"
+      }}>
+        <div style={{ color: "var(--text-main)" }}>
+          <strong>Tilde</strong> is an application under <strong>Bestdio Company</strong> (<a href="https://bestdio.in" target="_blank" rel="noreferrer" style={{ color: "var(--tilde-cyan)", textDecoration: "none", fontWeight: 700 }}>bestdio.in</a>).
+        </div>
+        <div style={{ color: "var(--text-faint)" }}>
+          © 2026 Bestdio Company. All rights reserved.
         </div>
       </div>
     </footer>

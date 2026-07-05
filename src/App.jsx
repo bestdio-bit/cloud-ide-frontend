@@ -6,6 +6,7 @@ import TerminalPanel from "./components/TerminalPanel";
 import IdeBottomBar from "./components/IdeBottomBar";
 import MarketingNavbar from "./components/MarketingNavbar";
 import MarketingFooter from "./components/MarketingFooter";
+import DownloadModal from "./components/DownloadModal";
 import LandingPage from "./pages/LandingPage";
 import FeaturesPage from "./pages/FeaturesPage";
 import TemplatesPage from "./pages/TemplatesPage";
@@ -16,6 +17,7 @@ import { STARTER_CODE } from "./constants/languages";
 
 export default function App() {
   const [currentView, setCurrentView] = useState("landing"); // 'landing' | 'features' | 'templates' | 'pricing' | 'about' | 'docs' | 'ide'
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
   
   const [selectedLang, setSelectedLang] = useState("python");
   const [code, setCode] = useState(STARTER_CODE.python);
@@ -46,7 +48,7 @@ export default function App() {
       setCurrentView("ide");
     }
 
-    // Capture PWA install prompt event for "Download App" button
+    // Capture PWA install prompt event for "Install App" button
     const handleInstallPrompt = (e) => {
       e.preventDefault();
       window.deferredPrompt = e;
@@ -82,7 +84,7 @@ export default function App() {
     });
 
     newSocket.on("connect", () => {
-      console.log("Connected to PulseIDE Backend:", newSocket.id);
+      console.log("Connected to Tilde Backend:", newSocket.id);
       setServerStatus("online");
     });
 
@@ -169,9 +171,13 @@ export default function App() {
   if (currentView !== "ide") {
     return (
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "var(--bg-dark)" }}>
-        <MarketingNavbar currentView={currentView} setCurrentView={setCurrentView} />
+        <MarketingNavbar
+          currentView={currentView}
+          setCurrentView={setCurrentView}
+          onOpenDownload={() => setIsDownloadOpen(true)}
+        />
         <main style={{ flex: 1 }}>
-          {currentView === "landing" && <LandingPage setCurrentView={setCurrentView} />}
+          {currentView === "landing" && <LandingPage setCurrentView={setCurrentView} onOpenDownload={() => setIsDownloadOpen(true)} />}
           {currentView === "features" && <FeaturesPage setCurrentView={setCurrentView} />}
           {currentView === "templates" && <TemplatesPage onLaunchTemplate={handleLaunchTemplate} />}
           {currentView === "pricing" && <PricingPage setCurrentView={setCurrentView} />}
@@ -179,11 +185,13 @@ export default function App() {
           {currentView === "docs" && <DocsPage setCurrentView={setCurrentView} />}
         </main>
         <MarketingFooter setCurrentView={setCurrentView} />
+
+        <DownloadModal isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} />
       </div>
     );
   }
 
-  // Render PulseIDE Workspace
+  // Render Tilde Workspace
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-dark)", overflow: "hidden" }}>
       {/* Top Navbar */}
@@ -219,7 +227,7 @@ export default function App() {
               gap: "8px",
               background: "transparent",
               border: "none",
-              borderBottom: mobileTab === "editor" ? "2px solid var(--bestdio-cyan)" : "2px solid transparent",
+              borderBottom: mobileTab === "editor" ? "2px solid var(--tilde-cyan)" : "2px solid transparent",
               color: mobileTab === "editor" ? "var(--text-main)" : "var(--text-muted)",
               fontWeight: 700,
               fontSize: "13px",
@@ -239,7 +247,7 @@ export default function App() {
               gap: "8px",
               background: "transparent",
               border: "none",
-              borderBottom: mobileTab === "terminal" ? "2px solid var(--bestdio-emerald)" : "2px solid transparent",
+              borderBottom: mobileTab === "terminal" ? "2px solid var(--tilde-indigo)" : "2px solid transparent",
               color: mobileTab === "terminal" ? "var(--text-main)" : "var(--text-muted)",
               fontWeight: 700,
               fontSize: "13px",
@@ -247,7 +255,7 @@ export default function App() {
               transition: "all 0.15s"
             }}
           >
-            🖥️ Interactive Terminal {running && <span className="animate-spin" style={{ color: "var(--bestdio-cyan)" }}>⟳</span>}
+            🖥️ Interactive Terminal {running && <span className="animate-spin" style={{ color: "var(--tilde-cyan)" }}>⟳</span>}
           </button>
         </div>
       )}
@@ -279,6 +287,8 @@ export default function App() {
 
       {/* Protective Bottom Status Bar (Prevents screen merging & clipping) */}
       <IdeBottomBar selectedLang={selectedLang} running={running} />
+
+      <DownloadModal isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} />
     </div>
   );
 }

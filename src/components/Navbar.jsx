@@ -54,34 +54,34 @@ export default function Navbar({
           <button
             onClick={onBackToHome}
             className="btn btn-secondary"
-            style={{ padding: "6px 12px", fontSize: "12px", borderRadius: "8px", fontWeight: 700, borderColor: "var(--bestdio-cyan)", color: "var(--bestdio-cyan)" }}
-            title="Return to Bestdio Company Marketing Home"
+            style={{ padding: "6px 12px", fontSize: "12px", borderRadius: "8px", fontWeight: 700, borderColor: "var(--tilde-cyan)", color: "var(--tilde-cyan)" }}
+            title="Return to Tilde Marketing Home"
           >
-            ← Bestdio Home
+            ← Tilde Home
           </button>
         )}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
-            background: "linear-gradient(135deg, var(--bestdio-emerald), var(--bestdio-cyan))",
+            background: "linear-gradient(135deg, #38bdf8, #818cf8, #c084fc)",
             width: "36px",
             height: "36px",
             borderRadius: "10px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "20px",
-            fontWeight: 800,
+            fontSize: "22px",
+            fontWeight: 900,
             color: "#000",
-            boxShadow: "0 2px 10px rgba(0, 242, 254, 0.3)"
+            boxShadow: "0 0 20px rgba(56, 189, 248, 0.4)"
           }}>
-            ⚡
+            ~
           </div>
           <div>
-            <h1 style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "-0.3px", color: "#fff" }}>
-              PulseIDE
+            <h1 style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "-0.3px", color: "#fff", margin: 0 }}>
+              Tilde
             </h1>
-            <span style={{ fontSize: "11px", color: "var(--bestdio-emerald)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              by Bestdio Company
+            <span style={{ fontSize: "10px", color: "#38bdf8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+              Interactive Workspace
             </span>
           </div>
         </div>

@@ -85,40 +85,39 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
               padding: "0 16px",
               height: "100%",
               background: "var(--bg-dark)",
-              color: "var(--text-main)",
-              borderTop: "2px solid var(--bestdio-cyan)",
-              fontWeight: 600,
-              fontSize: "13px",
-              fontFamily: "var(--font-mono)"
+              borderBottom: "1px solid var(--border)",
+              borderTop: "2px solid var(--tilde-cyan)"
             }}
           >
-            <span>{currentLangObj.icon}</span>
-            <span>{filename}</span>
+            <span style={{ fontSize: "14px" }}>{currentLangObj?.icon || "📄"}</span>
+            <span style={{ fontWeight: 600, fontSize: "13px", color: "var(--text-main)" }}>
+              {currentLangObj?.name || "Code"}
+            </span>
           </div>
         </div>
 
-        {/* Editor Metadata & Copy Code Button */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "12px", color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
+        {/* Right: Actions */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <button
             onClick={handleCopy}
             className="btn btn-secondary"
             style={{
               padding: "4px 10px",
-              fontSize: "11px",
-              borderRadius: "6px",
+              fontSize: "12px",
               fontWeight: 700,
-              borderColor: copied ? "var(--bestdio-emerald)" : "var(--border)",
-              color: copied ? "var(--bestdio-emerald)" : "var(--text-main)",
-              background: copied ? "rgba(16, 185, 129, 0.15)" : "var(--bg-raised)"
+              borderColor: copied ? "var(--tilde-emerald)" : "var(--border)",
+              color: copied ? "var(--tilde-emerald)" : "var(--text-main)",
+              transition: "all 0.2s"
             }}
-            title="Copy editor code to clipboard"
+            title="Copy code to clipboard"
           >
-            {copied ? "✅ Copied!" : "📋 Copy Code"}
+            <span>{copied ? "✅ Copied!" : "📋 Copy Code"}</span>
           </button>
-          <span style={{ background: "rgba(0, 242, 254, 0.1)", color: "var(--bestdio-cyan)", padding: "2px 8px", borderRadius: "10px", fontWeight: 700, fontSize: "11px" }}>
+
+          <span style={{ background: "rgba(56, 189, 248, 0.15)", color: "var(--tilde-cyan)", padding: "2px 8px", borderRadius: "10px", fontWeight: 700, fontSize: "11px" }}>
             {isDesktop ? "💻 Monaco Editor" : "📱 CodeMirror"}
           </span>
-          <span>{lineCount} lines | {code.length} chars</span>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-faint)" }}>{lineCount} lines | {code.length} chars</span>
         </div>
       </div>
 
