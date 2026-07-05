@@ -12,6 +12,7 @@ import { LANGUAGES } from "../constants/languages";
 
 export default function EditorPanel({ selectedLang, code, setCode }) {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 850);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 850);
@@ -22,6 +23,12 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
   const currentLangObj = LANGUAGES.find((l) => l.id === selectedLang) || LANGUAGES[0];
   const filename = `main.${currentLangObj.ext || "js"}`;
   const lineCount = code.split("\n").length;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code || "");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const getCodeMirrorExtension = (lang) => {
     switch (lang) {
@@ -79,7 +86,7 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
               height: "100%",
               background: "var(--bg-dark)",
               color: "var(--text-main)",
-              borderTop: "2px solid var(--accent-cyan)",
+              borderTop: "2px solid var(--bestdio-cyan)",
               fontWeight: 600,
               fontSize: "13px",
               fontFamily: "var(--font-mono)"
@@ -90,9 +97,25 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
           </div>
         </div>
 
-        {/* Editor Metadata */}
+        {/* Editor Metadata & Copy Code Button */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "12px", color: "var(--text-faint)", fontFamily: "var(--font-mono)" }}>
-          <span style={{ background: "rgba(56, 189, 248, 0.1)", color: "var(--accent-cyan)", padding: "2px 8px", borderRadius: "10px", fontWeight: 700, fontSize: "11px" }}>
+          <button
+            onClick={handleCopy}
+            className="btn btn-secondary"
+            style={{
+              padding: "4px 10px",
+              fontSize: "11px",
+              borderRadius: "6px",
+              fontWeight: 700,
+              borderColor: copied ? "var(--bestdio-emerald)" : "var(--border)",
+              color: copied ? "var(--bestdio-emerald)" : "var(--text-main)",
+              background: copied ? "rgba(16, 185, 129, 0.15)" : "var(--bg-raised)"
+            }}
+            title="Copy editor code to clipboard"
+          >
+            {copied ? "✅ Copied!" : "📋 Copy Code"}
+          </button>
+          <span style={{ background: "rgba(0, 242, 254, 0.1)", color: "var(--bestdio-cyan)", padding: "2px 8px", borderRadius: "10px", fontWeight: 700, fontSize: "11px" }}>
             {isDesktop ? "💻 Monaco Editor" : "📱 CodeMirror"}
           </span>
           <span>{lineCount} lines | {code.length} chars</span>

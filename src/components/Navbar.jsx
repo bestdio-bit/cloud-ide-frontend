@@ -78,7 +78,7 @@ export default function Navbar({
           </div>
           <div>
             <h1 style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "-0.3px", color: "#fff" }}>
-              Bestdio <span style={{ color: "var(--bestdio-cyan)", fontWeight: 400 }}>CloudIDE</span>
+              PulseIDE
             </h1>
             <span style={{ fontSize: "11px", color: "var(--bestdio-emerald)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
               by Bestdio Company

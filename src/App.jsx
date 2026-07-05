@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import Navbar from "./components/Navbar";
 import EditorPanel from "./components/EditorPanel";
 import TerminalPanel from "./components/TerminalPanel";
+import IdeBottomBar from "./components/IdeBottomBar";
 import MarketingNavbar from "./components/MarketingNavbar";
 import MarketingFooter from "./components/MarketingFooter";
 import LandingPage from "./pages/LandingPage";
@@ -35,7 +36,27 @@ export default function App() {
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 850);
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    
+    // Check if launched as installed standalone PWA app or via URL parameter
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || 
+                         window.navigator.standalone || 
+                         window.location.search.includes("mode=ide") ||
+                         window.location.search.includes("view=ide");
+    if (isStandalone) {
+      setCurrentView("ide");
+    }
+
+    // Capture PWA install prompt event for "Download App" button
+    const handleInstallPrompt = (e) => {
+      e.preventDefault();
+      window.deferredPrompt = e;
+    };
+    window.addEventListener("beforeinstallprompt", handleInstallPrompt);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("beforeinstallprompt", handleInstallPrompt);
+    };
   }, []);
 
   // When language changes, update starter code
@@ -61,7 +82,7 @@ export default function App() {
     });
 
     newSocket.on("connect", () => {
-      console.log("Connected to CloudIDE Backend:", newSocket.id);
+      console.log("Connected to PulseIDE Backend:", newSocket.id);
       setServerStatus("online");
     });
 
@@ -162,7 +183,7 @@ export default function App() {
     );
   }
 
-  // Render CloudIDE Workspace
+  // Render PulseIDE Workspace
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-dark)", overflow: "hidden" }}>
       {/* Top Navbar */}
@@ -198,7 +219,7 @@ export default function App() {
               gap: "8px",
               background: "transparent",
               border: "none",
-              borderBottom: mobileTab === "editor" ? "2px solid var(--accent-cyan)" : "2px solid transparent",
+              borderBottom: mobileTab === "editor" ? "2px solid var(--bestdio-cyan)" : "2px solid transparent",
               color: mobileTab === "editor" ? "var(--text-main)" : "var(--text-muted)",
               fontWeight: 700,
               fontSize: "13px",
@@ -218,7 +239,7 @@ export default function App() {
               gap: "8px",
               background: "transparent",
               border: "none",
-              borderBottom: mobileTab === "terminal" ? "2px solid var(--accent-purple)" : "2px solid transparent",
+              borderBottom: mobileTab === "terminal" ? "2px solid var(--bestdio-emerald)" : "2px solid transparent",
               color: mobileTab === "terminal" ? "var(--text-main)" : "var(--text-muted)",
               fontWeight: 700,
               fontSize: "13px",
@@ -226,7 +247,7 @@ export default function App() {
               transition: "all 0.15s"
             }}
           >
-            🖥️ Interactive Terminal {running && <span className="animate-spin" style={{ color: "var(--accent-cyan)" }}>⟳</span>}
+            🖥️ Interactive Terminal {running && <span className="animate-spin" style={{ color: "var(--bestdio-cyan)" }}>⟳</span>}
           </button>
         </div>
       )}
@@ -255,6 +276,9 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Protective Bottom Status Bar (Prevents screen merging & clipping) */}
+      <IdeBottomBar selectedLang={selectedLang} running={running} />
     </div>
   );
 }

@@ -1,81 +1,70 @@
 import React from "react";
 
 export default function AboutPage({ setCurrentView }) {
-  const values = [
-    {
-      icon: "🌍",
-      title: "Universal Accessibility",
-      desc: "We believe that every student, educator, and developer across the globe deserves access to world-class software engineering tools without hitting financial barriers or time-limited trial paywalls."
-    },
-    {
-      icon: "🛡️",
-      title: "Uncompromised Security",
-      desc: "By isolating every execution session inside an ephemeral Debian Linux Docker container, we guarantee that user code runs in a pristine, tamper-proof environment that never compromises system integrity."
-    },
-    {
-      icon: "⚡",
-      title: "Zero Latency Interactivity",
-      desc: "We reject the industry standard of batch-only code evaluation. Bestdio CloudIDE is engineered around node-pty and WebSocket streams to deliver real-time terminal feedback."
-    },
-    {
-      icon: "📖",
-      title: "Open Source Dedication",
-      desc: "CloudIDE is built on top of incredible open-source technologies including React, Vite, Monaco Editor, CodeMirror, Xterm.js, Socket.io, and Docker. We give back by keeping our core stack transparent."
-    }
-  ];
-
   return (
     <div className="animate-fade-in" style={{ padding: "60px 0 100px" }}>
-      <div className="marketing-container">
+      <div className="marketing-container" style={{ maxWidth: "860px" }}>
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "80px", maxWidth: "800px", margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: "60px" }}>
           <div className="bestdio-badge" style={{ marginBottom: "16px" }}>
-            🏢 ABOUT BESTDIO COMPANY
+            🏢 ABOUT PULSEIDE
           </div>
           <h1 style={{ fontSize: "42px", fontWeight: 900, color: "#fff", marginBottom: "20px" }}>
-            Democratizing <span className="hero-gradient-text">Cloud Engineering</span>
+            Engineered for <span className="hero-gradient-text">Interactive Performance</span>
           </h1>
           <p style={{ fontSize: "18px", color: "var(--text-muted)", lineHeight: "1.6" }}>
-            Bestdio Company is a dedicated software engineering collective focused on building high-performance, developer-first tools. CloudIDE is our flagship interactive sandbox.
+            Learn about our mission, our zero-cost cloud architecture, and our engineering commitment to developers worldwide.
           </p>
         </div>
 
-        {/* Brand Mission Card */}
-        <div className="glass-card" style={{
-          padding: "50px",
-          marginBottom: "80px",
-          background: "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0, 242, 254, 0.1))",
-          border: "1px solid rgba(0, 242, 254, 0.3)"
-        }}>
+        {/* Content Box */}
+        <div className="glass-card" style={{ padding: "48px", marginBottom: "50px" }}>
           <h2 style={{ fontSize: "28px", fontWeight: 800, color: "#fff", marginBottom: "20px" }}>
-            Our Engineering Philosophy
+            The PulseIDE Philosophy
           </h2>
-          <p style={{ fontSize: "16px", color: "var(--text-main)", lineHeight: "1.8", marginBottom: "20px" }}>
-            When we set out to build <strong>Bestdio CloudIDE</strong>, we noticed a glaring gap in the market: most free online compilers only allowed you to paste code and hit run, freezing completely whenever an algorithm requested user input like Python's <code>input()</code> or C++'s <code>std::cin</code>. Meanwhile, true cloud environments like GitHub Codespaces or Replit required user logins, credit cards, or paid subscriptions.
+          <p style={{ fontSize: "16px", color: "var(--text-muted)", lineHeight: "1.8", marginBottom: "24px" }}>
+            For decades, learning systems programming, data science, or competitive algorithms required complicated local software setups, cumbersome environment variables, and expensive laptop hardware. 
+            <strong>PulseIDE</strong> was created to eliminate those friction points entirely.
           </p>
-          <p style={{ fontSize: "16px", color: "var(--text-muted)", lineHeight: "1.8" }}>
-            We created Bestdio CloudIDE as an independent, flagship platform under Bestdio Company—completely distinct from any legacy projects like Verto. By combining lightweight React frontend bundles hosted on global edge networks with isolated Linux Docker containers running on free cloud tiers, we achieved our dream: a 100% free, interactive terminal sandbox for 10+ languages.
+          <p style={{ fontSize: "16px", color: "var(--text-muted)", lineHeight: "1.8", marginBottom: "30px" }}>
+            We provide instant, zero-setup access to industrial compilers (GCC, Rustc, OpenJDK, Go, Node.js, Python 3) running in secure Docker containers. 
+            Most importantly, we solved the hardest problem in web-based code runners: <strong>true interactive terminal streaming</strong>. You can run interactive programs that prompt for user input in real-time.
           </p>
-        </div>
 
-        {/* Values Grid */}
-        <div style={{ marginBottom: "80px" }}>
-          <h3 style={{ fontSize: "28px", fontWeight: 800, color: "#fff", marginBottom: "40px", textAlign: "center" }}>
-            What Drives Bestdio Company
-          </h3>
           <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "30px"
+            borderLeft: "4px solid var(--bestdio-cyan)",
+            paddingLeft: "24px",
+            margin: "36px 0",
+            background: "rgba(0, 242, 254, 0.05)",
+            padding: "20px 24px",
+            borderRadius: "0 12px 12px 0"
           }}>
-            {values.map((v, idx) => (
-              <div key={idx} className="glass-card" style={{ padding: "36px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                <div style={{ fontSize: "36px" }}>{v.icon}</div>
-                <h4 style={{ fontSize: "20px", fontWeight: 800, color: "#fff" }}>{v.title}</h4>
-                <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: "1.6" }}>{v.desc}</p>
-              </div>
-            ))}
+            <h3 style={{ fontSize: "18px", fontWeight: 800, color: "#fff", marginBottom: "8px" }}>
+              An Application under Bestdio Company
+            </h3>
+            <p style={{ fontSize: "14px", color: "var(--text-main)", lineHeight: "1.6", margin: 0 }}>
+              <strong>PulseIDE</strong> is a proud application developed under <strong>Bestdio Company</strong> (<a href="https://bestdio.in" target="_blank" rel="noreferrer" style={{ color: "var(--bestdio-cyan)", textDecoration: "none", fontWeight: 700 }}>bestdio.in</a>). 
+              Our commitment is to maintain an open, accessible, and high-performance cloud development ecosystem for engineers and creators.
+            </p>
           </div>
+
+          <h3 style={{ fontSize: "22px", fontWeight: 800, color: "#fff", marginBottom: "16px", marginTop: "40px" }}>
+            Key Architectural Highlights
+          </h3>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px", fontSize: "15px", color: "var(--text-main)" }}>
+            <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>⚡</span>
+              <span><strong>Low-Latency Pseudo-Terminals:</strong> Built with Node.js `node-pty` and Socket.io for instantaneous keystroke echoing and ANSI terminal formatting.</span>
+            </li>
+            <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>🐳</span>
+              <span><strong>Containerized Security:</strong> Every execution session runs inside an ephemeral Docker sandbox with strict CPU, RAM, and network boundaries.</span>
+            </li>
+            <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--bestdio-emerald)", fontWeight: 900 }}>📱</span>
+              <span><strong>Universal Device Compatibility:</strong> Responsive layouts supporting desktop Monaco Editor and touch-optimized mobile CodeMirror engines.</span>
+            </li>
+          </ul>
         </div>
 
         {/* CTA */}
@@ -83,9 +72,9 @@ export default function AboutPage({ setCurrentView }) {
           <button
             onClick={() => setCurrentView("ide")}
             className="btn btn-bestdio"
-            style={{ padding: "16px 40px", fontSize: "16px" }}
+            style={{ padding: "16px 40px", fontSize: "18px", fontWeight: 800 }}
           >
-            <span>⚡ Launch Bestdio CloudIDE</span>
+            <span>⚡ Launch PulseIDE Workspace</span>
           </button>
         </div>
       </div>

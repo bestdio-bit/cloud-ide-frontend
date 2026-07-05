@@ -33,11 +33,11 @@ export default function MarketingFooter({ setCurrentView }) {
                 ⚡
               </div>
               <span style={{ fontSize: "18px", fontWeight: 800, color: "#fff" }}>
-                Bestdio <span style={{ color: "var(--bestdio-cyan)", fontWeight: 400 }}>CloudIDE</span>
+                PulseIDE
               </span>
             </div>
             <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: "1.6", marginBottom: "16px" }}>
-              The flagship zero-cost interactive development environment by <strong>Bestdio Company</strong>. Built for developers, students, and educators globally.
+              The flagship interactive cloud development environment. Engineered for zero-latency terminal streaming.
             </p>
             <div className="bestdio-badge" style={{ fontSize: "11px" }}>
               🟢 100% Free Architecture
@@ -53,18 +53,18 @@ export default function MarketingFooter({ setCurrentView }) {
               <li><button onClick={() => setCurrentView("features")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Core Features</button></li>
               <li><button onClick={() => setCurrentView("templates")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: "0" }}>Code Templates & Showcase</button></li>
               <li><button onClick={() => setCurrentView("pricing")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Free Forever Pricing</button></li>
-              <li><button onClick={() => setCurrentView("ide")} style={{ background: "none", border: "none", color: "var(--bestdio-cyan)", fontWeight: 600, cursor: "pointer", padding: 0 }}>⚡ Launch CloudIDE</button></li>
+              <li><button onClick={() => setCurrentView("ide")} style={{ background: "none", border: "none", color: "var(--bestdio-cyan)", fontWeight: 600, cursor: "pointer", padding: 0 }}>⚡ Launch PulseIDE</button></li>
             </ul>
           </div>
 
           {/* Company Col */}
           <div>
             <h4 style={{ fontSize: "14px", fontWeight: 700, color: "#fff", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              Bestdio Company
+              Parent Company
             </h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px" }}>
-              <li><button onClick={() => setCurrentView("about")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>About Bestdio</button></li>
-              <li><button onClick={() => setCurrentView("about")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Our Philosophy</button></li>
+              <li><button onClick={() => setCurrentView("about")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>About PulseIDE</button></li>
+              <li><a href="https://bestdio.in" target="_blank" rel="noreferrer" style={{ color: "var(--bestdio-cyan)", textDecoration: "none", fontWeight: 600 }}>Navigate to bestdio.in</a></li>
               <li><a href="https://github.com/bestdio-bit" target="_blank" rel="noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>GitHub Organization</a></li>
               <li><button onClick={() => setCurrentView("docs")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", padding: 0 }}>Documentation & Tutorials</button></li>
             </ul>
@@ -79,7 +79,7 @@ export default function MarketingFooter({ setCurrentView }) {
               <li>🐳 Docker Sandbox (Debian Linux)</li>
               <li>⚡ Socket.io Real-Time Stream</li>
               <li>💻 Monaco Editor & CodeMirror</li>
-              <li>🚀 Vercel & Render Cloud Hosting</li>
+              <li>📱 PWA Standalone App Support</li>
             </ul>
           </div>
         </div>
@@ -96,7 +96,7 @@ export default function MarketingFooter({ setCurrentView }) {
           color: "var(--text-faint)"
         }}>
           <div>
-            © {new Date().getFullYear()} <strong>Bestdio Company</strong>. All rights reserved. Not affiliated with or similar to Verto.
+            © {new Date().getFullYear()} <strong>PulseIDE</strong>. All rights reserved. An application under <strong>Bestdio Company</strong> (<a href="https://bestdio.in" target="_blank" rel="noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>bestdio.in</a>).
           </div>
           <div style={{ display: "flex", gap: "20px" }}>
             <span>Privacy Policy</span>

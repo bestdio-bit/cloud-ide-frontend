@@ -2,6 +2,13 @@ import React, { useState } from "react";
 
 export default function TemplatesPage({ onLaunchTemplate }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [copiedId, setCopiedId] = useState(null);
+
+  const handleCopyTemplate = (id, codeText) => {
+    navigator.clipboard.writeText(codeText);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   const templates = [
     {
@@ -11,11 +18,11 @@ export default function TemplatesPage({ onLaunchTemplate }) {
       category: "data",
       badge: "🐍 Python 3",
       desc: "Simulates dataset normalisation and statistical analytics using standard Python data structures and generators.",
-      code: `# Bestdio CloudIDE - Python Data Analytics Template
+      code: `# PulseIDE - Python Data Analytics Template
 # Notice: Click "Open Directly in IDE" to run interactively!
 
 def analyze_dataset(data_points):
-    print("--- 📊 Bestdio Data Analytics Pipeline ---")
+    print("--- 📊 PulseIDE Data Analytics Pipeline ---")
     total = sum(data_points)
     avg = total / len(data_points)
     variance = sum((x - avg) ** 2 for x in data_points) / len(data_points)
@@ -45,7 +52,7 @@ if __name__ == "__main__":
       category: "algo",
       badge: "⚡ C++17",
       desc: "Optimized in-place QuickSort implementation demonstrating C++ pointers, references, and standard input/output streams.",
-      code: `// Bestdio CloudIDE - C++ High Performance Algorithms
+      code: `// PulseIDE - C++ High Performance Algorithms
 // Notice: Click "Open Directly in IDE" to compile with GCC!
 
 #include <iostream>
@@ -60,7 +67,7 @@ void printVector(const std::vector<int>& vec) {
 }
 
 int main() {
-    std::cout << "--- ⚡ Bestdio C++ Algorithm Engine ---\\n";
+    std::cout << "--- ⚡ PulseIDE C++ Algorithm Engine ---\\n";
     std::vector<int> numbers = {64, 34, 25, 12, 22, 11, 90};
     
     std::cout << "Original Array: ";
@@ -91,7 +98,7 @@ int main() {
       category: "systems",
       badge: "🦀 Rust",
       desc: "Demonstrates Rust's zero-cost abstractions, memory ownership rules, and pattern matching without garbage collection.",
-      code: `// Bestdio CloudIDE - Rust Memory Safety Sandbox
+      code: `// PulseIDE - Rust Memory Safety Sandbox
 // Notice: Click "Open Directly in IDE" to compile with Rustc!
 
 use std::io;
@@ -118,7 +125,7 @@ impl ServerNode {
 }
 
 fn main() {
-    println!("--- 🦀 Bestdio Rust Systems Engine ---");
+    println!("--- 🦀 PulseIDE Rust Systems Engine ---");
     let node1 = ServerNode::new(101, "us-east-cluster-1");
     let node2 = ServerNode::new(102, "eu-central-docker-2");
 
@@ -144,7 +151,7 @@ fn main() {
       category: "enterprise",
       badge: "☕ Java 17",
       desc: "Object-oriented banking transaction model utilizing encapsulation, exception handling, and interactive Scanner input.",
-      code: `// Bestdio CloudIDE - Java Enterprise Sandbox
+      code: `// PulseIDE - Java Enterprise Sandbox
 // Notice: Click "Open Directly in IDE" to run with OpenJDK!
 
 import java.util.Scanner;
@@ -177,8 +184,8 @@ class BankAccount {
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("--- ☕ Bestdio Java Enterprise Ledger ---");
-        BankAccount account = new BankAccount("BESTDIO-9942", 500.00);
+        System.out.println("--- ☕ PulseIDE Java Enterprise Ledger ---");
+        BankAccount account = new BankAccount("PULSE-9942", 500.00);
         
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter withdrawal amount: $");
@@ -198,7 +205,7 @@ public class Main {
       category: "systems",
       badge: "🐹 Go 1.21",
       desc: "Showcases Go's lightweight concurrency model using goroutines and buffered channels for asynchronous job processing.",
-      code: `// Bestdio CloudIDE - Go Concurrency Pipeline
+      code: `// PulseIDE - Go Concurrency Pipeline
 // Notice: Click "Open Directly in IDE" to execute!
 
 package main
@@ -217,7 +224,7 @@ func worker(id int, jobs <-chan int, results chan<- int) {
 }
 
 func main() {
-	fmt.Println("--- 🐹 Bestdio Go Concurrency Engine ---")
+	fmt.Println("--- 🐹 PulseIDE Go Concurrency Engine ---")
 	jobs := make(chan int, 5)
 	results := make(chan int, 5)
 
@@ -247,7 +254,7 @@ func main() {
       category: "web",
       badge: "⚡ Node.js 20",
       desc: "Modern JavaScript async/await patterns, non-blocking timers, and standard input stream handling.",
-      code: `// Bestdio CloudIDE - Node.js Async Sandbox
+      code: `// PulseIDE - Node.js Async Sandbox
 // Notice: Click "Open Directly in IDE" to execute!
 
 const readline = require("readline");
@@ -257,7 +264,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-console.log("--- ⚡ Bestdio Node.js Async Engine ---");
+console.log("--- ⚡ PulseIDE Node.js Async Engine ---");
 
 async function simulateCloudTask(taskName, ms) {
   console.log(\`⏳ Starting \${taskName}...\`);
@@ -276,7 +283,7 @@ async function runPipeline() {
   console.log(res2);
   
   rl.question("\\nEnter your favorite programming language: ", (answer) => {
-    console.log(\`🎉 Awesome! Setting up a \${answer} workspace on Bestdio CloudIDE!\`);
+    console.log(\`🎉 Awesome! Setting up a \${answer} workspace on PulseIDE!\`);
     rl.close();
   });
 }
@@ -312,7 +319,7 @@ runPipeline();
           </h1>
           <p style={{ fontSize: "18px", color: "var(--text-muted)", lineHeight: "1.6" }}>
             Explore production-ready algorithms and system patterns across 10 programming languages. 
-            <strong> Notice:</strong> There is no copy code option—click <em>"Open Directly in IDE"</em> to launch and run any snippet immediately!
+            You can copy any code snippet or click <em>"Open Directly in IDE"</em> to launch and run it immediately!
           </p>
         </div>
 
@@ -385,7 +392,7 @@ runPipeline();
                 </p>
               </div>
 
-              {/* Code Preview (Read-Only, No Copy Option) */}
+              {/* Code Preview */}
               <div style={{
                 padding: "20px",
                 background: "#05070b",
@@ -403,22 +410,35 @@ runPipeline();
                 </pre>
               </div>
 
-              {/* Action Footer (NO COPY CODE BUTTON - ONLY OPEN IN IDE!) */}
+              {/* Action Footer (Copy Code & Open in IDE) */}
               <div style={{
                 padding: "20px 24px",
                 background: "var(--bg-surface)",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
+                gap: "12px",
+                flexWrap: "wrap"
               }}>
-                <span style={{ fontSize: "12px", color: "var(--text-faint)", fontWeight: 600 }}>
-                  🚫 Copy code disabled
-                </span>
+                <button
+                  onClick={() => handleCopyTemplate(tmpl.id, tmpl.code)}
+                  className="btn btn-secondary"
+                  style={{
+                    padding: "8px 16px",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    borderColor: copiedId === tmpl.id ? "var(--bestdio-emerald)" : "var(--border)",
+                    color: copiedId === tmpl.id ? "var(--bestdio-emerald)" : "var(--text-main)",
+                    background: copiedId === tmpl.id ? "rgba(16, 185, 129, 0.15)" : "var(--bg-raised)"
+                  }}
+                >
+                  {copiedId === tmpl.id ? "✅ Copied!" : "📋 Copy Code"}
+                </button>
                 <button
                   onClick={() => onLaunchTemplate(tmpl.language, tmpl.code)}
-                  className="btn btn-bestdio"
+                  className="btn btn-primary"
                   style={{ padding: "10px 24px", fontSize: "14px", fontWeight: 800 }}
-                  title="Launch this template directly in CloudIDE"
+                  title="Launch this template directly in PulseIDE"
                 >
                   <span>⚡ Open Directly in IDE</span>
                 </button>
