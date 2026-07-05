@@ -61,7 +61,8 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
       background: "var(--bg-dark)",
       overflow: "hidden",
       borderRight: isDesktop ? "1px solid var(--border)" : "none",
-      minHeight: "300px"
+      minHeight: 0,
+      height: "100%"
     }}>
       {/* Editor Header: File Tab & Metadata */}
       <div style={{
@@ -151,7 +152,7 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
               theme="dark"
               extensions={getCodeMirrorExtension(selectedLang)}
               onChange={(val) => setCode(val || "")}
-              style={{ fontSize: "14px", fontFamily: "var(--font-mono)" }}
+              style={{ fontSize: window.innerWidth < 768 ? "11.5px" : "14px", fontFamily: "var(--font-mono)", lineHeight: window.innerWidth < 768 ? "1.4" : "1.5" }}
             />
           </div>
         )}

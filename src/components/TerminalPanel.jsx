@@ -8,12 +8,12 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
   const fitAddonRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [customInput, setCustomInput] = useState("");
 
   useEffect(() => {
     if (!terminalRef.current) return;
 
-    // Initialize Xterm.js with sleek dark aesthetic and vibrant ANSI palette
+    // Initialize Xterm.js with sleek dark aesthetic and smaller mobile font size for maximum visibility
+    const isMobile = window.innerWidth < 768;
     const term = new Terminal({
       theme: {
         background: "#080c14",
@@ -40,8 +40,8 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
       },
       cursorBlink: true,
       fontFamily: "'JetBrains Mono', monospace",
-      fontSize: window.innerWidth < 768 ? 13 : 13,
-      lineHeight: 1.45,
+      fontSize: isMobile ? 11 : 13,
+      lineHeight: isMobile ? 1.35 : 1.45,
       scrollback: 5000,
       convertEol: true
     });
@@ -71,7 +71,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
     // Welcome Header
     term.writeln("\x1b[1;36m=================================================================\x1b[0m");
     term.writeln("\x1b[1;32m ⚡ Tilde Interactive Cloud Sandbox (Xterm.js + node-pty TTY)\x1b[0m");
-    term.writeln("\x1b[38;5;245m    Type directly below or use the realtime stdin box & quick keys!\x1b[0m");
+    term.writeln("\x1b[38;5;245m    Type directly below or use the quick-access helper toolbar!\x1b[0m");
     term.writeln("\x1b[1;36m=================================================================\x1b[0m\r\n");
 
     // Forward keystrokes from Xterm.js to Socket.io backend
@@ -155,17 +155,6 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
   const sendKey = (seq) => {
     if (socket && socket.connected) {
       socket.emit("terminal_input", seq);
-      if (xtermRef.current) xtermRef.current.focus();
-    }
-  };
-
-  // Send Realtime Stdin (Verto-inspired mobile input handling)
-  const handleSendStdin = (e) => {
-    if (e) e.preventDefault();
-    if (!customInput && customInput !== "") return;
-    if (socket && socket.connected) {
-      socket.emit("terminal_input", customInput + "\r");
-      setCustomInput("");
       if (xtermRef.current) xtermRef.current.focus();
     }
   };
@@ -334,7 +323,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
         ref={terminalRef}
         style={{
           flex: 1,
-          padding: "8px 12px",
+          padding: "6px 10px",
           overflow: "hidden",
           background: "#080c14",
           minHeight: 0,
@@ -342,76 +331,6 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
           height: "100%"
         }}
       />
-
-      {/* Verto-Inspired Realtime Stdin / Interactive Input Bar (For Mobile & Desktop input) */}
-      <div style={{
-        padding: "10px 14px",
-        background: "var(--bg-surface)",
-        borderTop: "1px solid var(--border)",
-        display: "flex",
-        flexDirection: "column",
-        gap: "6px",
-        flexShrink: 0
-      }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "11px", color: "var(--text-muted)" }}>
-          <span style={{ fontWeight: 700, color: "var(--tilde-cyan)", display: "flex", alignItems: "center", gap: "6px" }}>
-            <span>⌨️ Realtime Stdin / Input:</span>
-          </span>
-          <span style={{ fontSize: "10px", color: "var(--text-faint)" }}>For cin, scanf, input(), prompt()</span>
-        </div>
-        <form onSubmit={handleSendStdin} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          <input
-            type="text"
-            value={customInput}
-            onChange={(e) => setCustomInput(e.target.value)}
-            placeholder="Type interactive input here & click Send..."
-            style={{
-              flex: 1,
-              background: "var(--bg-dark)",
-              border: "1px solid var(--border)",
-              borderRadius: "8px",
-              color: "var(--tilde-cyan)",
-              fontFamily: "var(--font-mono)",
-              fontSize: "13px",
-              padding: "8px 12px",
-              outline: "none"
-            }}
-          />
-          <button
-            type="submit"
-            className="btn btn-primary"
-            style={{
-              padding: "8px 16px",
-              fontSize: "12px",
-              fontWeight: 700,
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              flexShrink: 0,
-              borderRadius: "8px"
-            }}
-          >
-            <span>⚡</span> Send
-          </button>
-          {customInput && (
-            <button
-              type="button"
-              onClick={() => setCustomInput("")}
-              style={{
-                padding: "8px 10px",
-                fontSize: "11px",
-                background: "var(--bg-dark)",
-                border: "1px solid var(--border)",
-                color: "var(--text-muted)",
-                borderRadius: "8px",
-                cursor: "pointer"
-              }}
-            >
-              ✕
-            </button>
-          )}
-        </form>
-      </div>
     </div>
   );
 }
