@@ -3,9 +3,19 @@ import { io } from "socket.io-client";
 import Navbar from "./components/Navbar";
 import EditorPanel from "./components/EditorPanel";
 import TerminalPanel from "./components/TerminalPanel";
+import MarketingNavbar from "./components/MarketingNavbar";
+import MarketingFooter from "./components/MarketingFooter";
+import LandingPage from "./pages/LandingPage";
+import FeaturesPage from "./pages/FeaturesPage";
+import TemplatesPage from "./pages/TemplatesPage";
+import PricingPage from "./pages/PricingPage";
+import AboutPage from "./pages/AboutPage";
+import DocsPage from "./pages/DocsPage";
 import { STARTER_CODE } from "./constants/languages";
 
 export default function App() {
+  const [currentView, setCurrentView] = useState("landing"); // 'landing' | 'features' | 'templates' | 'pricing' | 'about' | 'docs' | 'ide'
+  
   const [selectedLang, setSelectedLang] = useState("python");
   const [code, setCode] = useState(STARTER_CODE.python);
   const [running, setRunning] = useState(false);
@@ -126,6 +136,33 @@ export default function App() {
     setExecutionStatus("killed");
   };
 
+  const handleLaunchTemplate = (lang, customCode) => {
+    setSelectedLang(lang);
+    setCode(customCode);
+    setExecutionStatus("ready");
+    setExecutionTime(null);
+    setCurrentView("ide");
+  };
+
+  // Render Marketing Website if not in IDE view
+  if (currentView !== "ide") {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "var(--bg-dark)" }}>
+        <MarketingNavbar currentView={currentView} setCurrentView={setCurrentView} />
+        <main style={{ flex: 1 }}>
+          {currentView === "landing" && <LandingPage setCurrentView={setCurrentView} />}
+          {currentView === "features" && <FeaturesPage setCurrentView={setCurrentView} />}
+          {currentView === "templates" && <TemplatesPage onLaunchTemplate={handleLaunchTemplate} />}
+          {currentView === "pricing" && <PricingPage setCurrentView={setCurrentView} />}
+          {currentView === "about" && <AboutPage setCurrentView={setCurrentView} />}
+          {currentView === "docs" && <DocsPage setCurrentView={setCurrentView} />}
+        </main>
+        <MarketingFooter setCurrentView={setCurrentView} />
+      </div>
+    );
+  }
+
+  // Render CloudIDE Workspace
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-dark)", overflow: "hidden" }}>
       {/* Top Navbar */}
@@ -139,6 +176,7 @@ export default function App() {
         backendUrl={backendUrl}
         setBackendUrl={setBackendUrl}
         onCheckStatus={checkServerStatus}
+        onBackToHome={() => setCurrentView("landing")}
       />
 
       {/* Mobile Tab Switcher */}

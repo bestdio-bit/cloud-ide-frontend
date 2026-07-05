@@ -10,7 +10,8 @@ export default function Navbar({
   serverStatus,
   backendUrl,
   setBackendUrl,
-  onCheckStatus
+  onCheckStatus,
+  onBackToHome
 }) {
   const [showConfig, setShowConfig] = useState(false);
   const [tempUrl, setTempUrl] = useState(backendUrl);
@@ -48,29 +49,41 @@ export default function Navbar({
       gap: "12px"
     }}>
       {/* Brand & Title */}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <div style={{
-          background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))",
-          width: "36px",
-          height: "36px",
-          borderRadius: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "20px",
-          fontWeight: 800,
-          color: "#000",
-          boxShadow: "0 2px 10px rgba(56, 189, 248, 0.3)"
-        }}>
-          ⚡
-        </div>
-        <div>
-          <h1 style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "-0.3px", background: "linear-gradient(90deg, #fff, var(--text-muted))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            CloudIDE
-          </h1>
-          <span style={{ fontSize: "11px", color: "var(--accent-cyan)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px" }}>
-            Multi-Language Sandbox
-          </span>
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        {onBackToHome && (
+          <button
+            onClick={onBackToHome}
+            className="btn btn-secondary"
+            style={{ padding: "6px 12px", fontSize: "12px", borderRadius: "8px", fontWeight: 700, borderColor: "var(--bestdio-cyan)", color: "var(--bestdio-cyan)" }}
+            title="Return to Bestdio Company Marketing Home"
+          >
+            ← Bestdio Home
+          </button>
+        )}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{
+            background: "linear-gradient(135deg, var(--bestdio-emerald), var(--bestdio-cyan))",
+            width: "36px",
+            height: "36px",
+            borderRadius: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "20px",
+            fontWeight: 800,
+            color: "#000",
+            boxShadow: "0 2px 10px rgba(0, 242, 254, 0.3)"
+          }}>
+            ⚡
+          </div>
+          <div>
+            <h1 style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "-0.3px", color: "#fff" }}>
+              Bestdio <span style={{ color: "var(--bestdio-cyan)", fontWeight: 400 }}>CloudIDE</span>
+            </h1>
+            <span style={{ fontSize: "11px", color: "var(--bestdio-emerald)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+              by Bestdio Company
+            </span>
+          </div>
         </div>
       </div>
 
