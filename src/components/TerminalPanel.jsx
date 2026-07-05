@@ -201,6 +201,10 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
       height: "100%",
       position: "relative"
     }}>
+      {/* Hidden trigger buttons for mobile IDE Action Bar */}
+      <button id="copy-terminal-btn-hidden" onClick={handleCopyOutput} style={{ display: "none" }} />
+      <button id="clear-terminal-btn-hidden" onClick={handleClearTerminal} style={{ display: "none" }} />
+
       {/* Terminal Navbar / Header (Top Row: Status & Actions) */}
       <div style={{
         display: "flex",
@@ -208,16 +212,18 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
         justifyContent: "space-between",
         background: "var(--bg-surface)",
         borderBottom: "1px solid var(--border)",
-        padding: "8px 16px",
-        minHeight: "42px",
+        padding: "6px 14px",
+        minHeight: "38px",
         flexShrink: 0,
         gap: "8px",
-        flexWrap: "wrap"
+        flexWrap: "nowrap",
+        overflowX: "auto",
+        whiteSpace: "nowrap"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flexShrink: 0 }}>
           <span style={{ fontSize: "14px" }}>🖥️</span>
-          <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-main)", fontFamily: "var(--font-mono)", whiteSpace: "nowrap" }}>
-            Interactive Execution Terminal
+          <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-main)", fontFamily: "var(--font-mono)", whiteSpace: "nowrap" }}>
+            {window.innerWidth < 768 ? "TTY Sandbox" : "Interactive Execution Terminal"}
           </span>
           <span style={{
             background: badge.bg,
@@ -240,41 +246,45 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
               ⏱️ {executionTime}s
             </span>
           )}
-          <button
-            onClick={handleCopyOutput}
-            style={{
-              background: copied ? "rgba(16, 185, 129, 0.2)" : "rgba(255, 255, 255, 0.05)",
-              border: copied ? "1px solid var(--accent-green)" : "1px solid var(--border)",
-              color: copied ? "var(--accent-green)" : "var(--text-main)",
-              padding: "4px 10px",
-              borderRadius: "6px",
-              fontSize: "11px",
-              fontWeight: 700,
-              cursor: "pointer",
-              transition: "all 0.2s",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px"
-            }}
-            title="Copy terminal output to clipboard"
-          >
-            {copied ? "✓ Copied" : "📋 Copy Log"}
-          </button>
-          <button
-            onClick={handleClearTerminal}
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "var(--text-muted)",
-              fontSize: "11px",
-              fontWeight: 600,
-              cursor: "pointer",
-              textDecoration: "underline"
-            }}
-            title="Clear terminal screen"
-          >
-            🗑️ Clear
-          </button>
+          {window.innerWidth >= 768 && (
+            <>
+              <button
+                onClick={handleCopyOutput}
+                style={{
+                  background: copied ? "rgba(16, 185, 129, 0.2)" : "rgba(255, 255, 255, 0.05)",
+                  border: copied ? "1px solid var(--accent-green)" : "1px solid var(--border)",
+                  color: copied ? "var(--accent-green)" : "var(--text-main)",
+                  padding: "4px 10px",
+                  borderRadius: "6px",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px"
+                }}
+                title="Copy terminal output to clipboard"
+              >
+                {copied ? "✓ Copied" : "📋 Copy Log"}
+              </button>
+              <button
+                onClick={handleClearTerminal}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "var(--text-muted)",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  textDecoration: "underline"
+                }}
+                title="Clear terminal screen"
+              >
+                🗑️ Clear
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -283,7 +293,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
         display: "flex",
         alignItems: "center",
         gap: "6px",
-        background: "#0a0f18",
+        background: "#050810",
         borderBottom: "1px solid var(--border)",
         padding: "6px 12px",
         overflowX: "auto",
@@ -291,16 +301,16 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
         flexShrink: 0,
         WebkitOverflowScrolling: "touch"
       }}>
-        <span style={{ fontSize: "10px", color: "var(--text-muted)", fontWeight: 700, marginRight: "4px", textTransform: "uppercase" }}>
-          Quick Keys:
+        <span style={{ fontSize: "10px", color: "var(--tilde-cyan)", fontWeight: 800, marginRight: "4px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          ⚡ KEYS:
         </span>
         {quickKeys.map((key, idx) => (
           <button
             key={idx}
             onClick={() => sendKey(key.seq)}
             style={{
-              background: key.danger ? "rgba(248, 113, 113, 0.15)" : key.primary ? "rgba(56, 189, 248, 0.2)" : "rgba(255, 255, 255, 0.06)",
-              border: key.danger ? "1px solid rgba(248, 113, 113, 0.4)" : key.primary ? "1px solid var(--tilde-cyan)" : "1px solid var(--border)",
+              background: key.danger ? "rgba(248, 113, 113, 0.15)" : key.primary ? "linear-gradient(135deg, rgba(56,189,248,0.25), rgba(129,140,248,0.25))" : "#0e1626",
+              border: key.danger ? "1px solid rgba(248, 113, 113, 0.4)" : key.primary ? "1px solid var(--tilde-cyan)" : "1px solid rgba(255, 255, 255, 0.12)",
               color: key.danger ? "#f87171" : key.primary ? "#38bdf8" : "#f8fafc",
               padding: "4px 10px",
               borderRadius: "6px",
@@ -309,6 +319,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
               fontWeight: 700,
               cursor: "pointer",
               flexShrink: 0,
+              boxShadow: key.primary ? "0 0 10px rgba(56, 189, 248, 0.2)" : "0 2px 4px rgba(0,0,0,0.3)",
               transition: "all 0.15s"
             }}
             title={key.title}

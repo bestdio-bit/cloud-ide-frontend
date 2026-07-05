@@ -64,63 +64,65 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
       minHeight: 0,
       height: "100%"
     }}>
-      {/* Editor Header: File Tab & Metadata */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        background: "var(--bg-surface)",
-        borderBottom: "1px solid var(--border)",
-        padding: "0 16px",
-        height: "44px",
-        flexShrink: 0,
-        overflowX: "auto"
-      }}>
-        {/* File Tab */}
-        <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "0 16px",
-              height: "100%",
-              background: "var(--bg-dark)",
-              borderBottom: "1px solid var(--border)",
-              borderTop: "2px solid var(--tilde-cyan)"
-            }}
-          >
-            <span style={{ fontSize: "14px" }}>{currentLangObj?.icon || "📄"}</span>
-            <span style={{ fontWeight: 600, fontSize: "13px", color: "var(--text-main)" }}>
-              {currentLangObj?.name || "Code"}
+      {/* Editor Header: File Tab & Metadata (Desktop Only) */}
+      {isDesktop && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background: "var(--bg-surface)",
+          borderBottom: "1px solid var(--border)",
+          padding: "0 16px",
+          height: "44px",
+          flexShrink: 0,
+          overflowX: "auto"
+        }}>
+          {/* File Tab */}
+          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "0 16px",
+                height: "100%",
+                background: "var(--bg-dark)",
+                borderBottom: "1px solid var(--border)",
+                borderTop: "2px solid var(--tilde-cyan)"
+              }}
+            >
+              <span style={{ fontSize: "14px" }}>{currentLangObj?.icon || "📄"}</span>
+              <span style={{ fontWeight: 600, fontSize: "13px", color: "var(--text-main)" }}>
+                {currentLangObj?.name || "Code"}
+              </span>
+            </div>
+          </div>
+
+          {/* Right: Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <button
+              onClick={handleCopy}
+              className="btn btn-secondary"
+              style={{
+                padding: "4px 10px",
+                fontSize: "12px",
+                fontWeight: 700,
+                borderColor: copied ? "var(--tilde-emerald)" : "var(--border)",
+                color: copied ? "var(--tilde-emerald)" : "var(--text-main)",
+                transition: "all 0.2s"
+              }}
+              title="Copy code to clipboard"
+            >
+              <span>{copied ? "✅ Copied!" : "📋 Copy Code"}</span>
+            </button>
+
+            <span style={{ background: "rgba(56, 189, 248, 0.15)", color: "var(--tilde-cyan)", padding: "2px 8px", borderRadius: "10px", fontWeight: 700, fontSize: "11px" }}>
+              {isDesktop ? "💻 Monaco Editor" : "📱 CodeMirror"}
             </span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-faint)" }}>{lineCount} lines | {code.length} chars</span>
           </div>
         </div>
-
-        {/* Right: Actions */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <button
-            onClick={handleCopy}
-            className="btn btn-secondary"
-            style={{
-              padding: "4px 10px",
-              fontSize: "12px",
-              fontWeight: 700,
-              borderColor: copied ? "var(--tilde-emerald)" : "var(--border)",
-              color: copied ? "var(--tilde-emerald)" : "var(--text-main)",
-              transition: "all 0.2s"
-            }}
-            title="Copy code to clipboard"
-          >
-            <span>{copied ? "✅ Copied!" : "📋 Copy Code"}</span>
-          </button>
-
-          <span style={{ background: "rgba(56, 189, 248, 0.15)", color: "var(--tilde-cyan)", padding: "2px 8px", borderRadius: "10px", fontWeight: 700, fontSize: "11px" }}>
-            {isDesktop ? "💻 Monaco Editor" : "📱 CodeMirror"}
-          </span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-faint)" }}>{lineCount} lines | {code.length} chars</span>
-        </div>
-      </div>
+      )}
 
       {/* Editor Body */}
       <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
@@ -157,6 +159,25 @@ export default function EditorPanel({ selectedLang, code, setCode }) {
           </div>
         )}
       </div>
+
+      {/* Sleek Mobile Editor Footer Badge */}
+      {!isDesktop && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "4px 12px",
+          background: "#080c14",
+          borderTop: "1px solid var(--border)",
+          fontSize: "10px",
+          color: "var(--text-faint)",
+          fontFamily: "var(--font-mono)",
+          flexShrink: 0
+        }}>
+          <span style={{ color: "var(--tilde-cyan)", fontWeight: 700 }}>{currentLangObj?.icon || "📄"} {currentLangObj?.name || "Code"}</span>
+          <span>{lineCount} lines | {code.length} chars</span>
+        </div>
+      )}
     </div>
   );
 }

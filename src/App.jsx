@@ -207,20 +207,22 @@ export default function App() {
         isStandalone={isStandalone}
       />
 
-      {/* Dedicated Verto-Inspired IDE Toolbar */}
+      {/* Consolidated Verto-Inspired IDE Action Bar */}
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "8px 18px",
+        padding: isDesktop ? "8px 18px" : "6px 12px",
         background: "var(--bg-surface)",
         borderBottom: "1px solid var(--border)",
         flexShrink: 0,
-        flexWrap: "wrap",
-        gap: "10px"
+        flexWrap: isDesktop ? "wrap" : "nowrap",
+        gap: "8px",
+        overflowX: "auto",
+        whiteSpace: "nowrap",
+        WebkitOverflowScrolling: "touch"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-muted)" }}>Language:</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
           <select
             value={selectedLang}
             onChange={(e) => handleLanguageChange(e.target.value)}
@@ -229,10 +231,10 @@ export default function App() {
               background: "var(--bg-raised)",
               border: "1px solid var(--border)",
               color: "var(--text-main)",
-              padding: "6px 12px",
+              padding: isDesktop ? "6px 12px" : "5px 10px",
               borderRadius: "8px",
               fontWeight: 700,
-              fontSize: "13px",
+              fontSize: isDesktop ? "13px" : "12px",
               cursor: running ? "not-allowed" : "pointer",
               outline: "none"
             }}
@@ -245,23 +247,39 @@ export default function App() {
           </select>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
           <button
             onClick={() => {
-              navigator.clipboard.writeText(code);
-              alert("Code copied to clipboard!");
+              if (!isDesktop && mobileTab === "terminal") {
+                const termBtn = document.getElementById("copy-terminal-btn-hidden");
+                if (termBtn) termBtn.click();
+                else {
+                  navigator.clipboard.writeText(code);
+                  alert("Code copied!");
+                }
+              } else {
+                navigator.clipboard.writeText(code);
+                alert("Code copied to clipboard!");
+              }
             }}
             className="btn btn-secondary"
-            style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700 }}
-            title="Copy current editor code"
+            style={{ padding: isDesktop ? "6px 12px" : "5px 10px", fontSize: isDesktop ? "12px" : "11px", fontWeight: 700 }}
+            title="Copy current code or terminal log"
           >
-            📋 Copy Code
+            📋 {isDesktop ? "Copy Code" : (mobileTab === "terminal" ? "Copy Log" : "Copy")}
           </button>
           <button
-            onClick={() => setCode("")}
+            onClick={() => {
+              if (!isDesktop && mobileTab === "terminal") {
+                const clearBtn = document.getElementById("clear-terminal-btn-hidden");
+                if (clearBtn) clearBtn.click();
+              } else {
+                setCode("");
+              }
+            }}
             className="btn btn-secondary"
-            style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700 }}
-            title="Clear editor code"
+            style={{ padding: isDesktop ? "6px 12px" : "5px 10px", fontSize: isDesktop ? "12px" : "11px", fontWeight: 700 }}
+            title="Clear editor or terminal"
           >
             🗑️ Clear
           </button>
@@ -269,7 +287,7 @@ export default function App() {
             <button
               onClick={handleKillCode}
               className="btn btn-danger"
-              style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700 }}
+              style={{ padding: isDesktop ? "6px 12px" : "5px 10px", fontSize: isDesktop ? "12px" : "11px", fontWeight: 700 }}
               title="Terminate active process"
             >
               ■ Kill
@@ -280,15 +298,15 @@ export default function App() {
             disabled={running}
             className="btn btn-primary"
             style={{
-              padding: "6px 18px",
-              fontSize: "13px",
+              padding: isDesktop ? "6px 18px" : "5px 14px",
+              fontSize: isDesktop ? "13px" : "12px",
               fontWeight: 800,
               opacity: running ? 0.7 : 1,
               cursor: running ? "not-allowed" : "pointer"
             }}
             title="Compile and run in cloud terminal"
           >
-            <span className={running ? "animate-spin" : ""} style={{ fontSize: "14px", marginRight: "6px" }}>
+            <span className={running ? "animate-spin" : ""} style={{ fontSize: "14px", marginRight: "4px" }}>
               {running ? "⟳" : "▶"}
             </span>
             {running ? "Executing..." : "Run Code"}
