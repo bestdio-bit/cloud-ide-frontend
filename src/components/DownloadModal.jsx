@@ -28,10 +28,13 @@ export default function DownloadModal({ isOpen, onClose }) {
   <meta http-equiv="refresh" content="0;url=${window.location.origin}/?mode=ide" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body style="background:#05070b;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;">
-  <div style="background:linear-gradient(135deg, #38bdf8, #818cf8);width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:#000;margin-bottom:20px;box-shadow:0 10px 30px rgba(56,189,248,0.4);">~</div>
-  <h2 style="margin:0 0 10px;font-size:24px;font-weight:800;">Launching Tilde Workspace...</h2>
-  <p style="color:#94a3b8;font-size:14px;">Connecting to secure zero-latency terminal streams.</p>
+<body style="background:#030508;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;">
+  <div style="background:linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);width:76px;height:76px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:900;color:#000;margin-bottom:24px;box-shadow:0 0 40px rgba(56,189,248,0.5);">~</div>
+  <div style="display:flex;align-items:baseline;margin-bottom:12px;">
+    <h2 style="margin:0;font-size:32px;font-weight:900;letterSpacing:-1px;">Tilde</h2>
+    <span style="font-size:12px;color:#38bdf8;font-weight:800;vertical-align:super;margin-left:5px;background:rgba(56,189,248,0.15);padding:3px 8px;border-radius:10px;border:1px solid rgba(56,189,248,0.3);">by bestdio</span>
+  </div>
+  <p style="color:#94a3b8;font-size:14px;font-family:monospace;">⚡ Initializing Zero-Latency Workspace...</p>
   <script>window.location.href = "${window.location.origin}/?mode=ide";</script>
 </body>
 </html>`;

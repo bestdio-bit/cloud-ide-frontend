@@ -11,6 +11,45 @@ name = input("➜ Enter your developer handle: ")
 print(f"\\nWelcome to the cloud, {name}! 🚀")
 print("All systems operational. Zero-latency TTY active.")`;
 
+  const features = [
+    {
+      icon: "⚡",
+      title: "Real-Time Bidirectional TTY",
+      desc: "Unlike standard code runners that hang on user input, Tilde connects directly to a live Linux pseudo-terminal via Socket.io and node-pty for instantaneous echoing.",
+      tag: "CORE ENGINE"
+    },
+    {
+      icon: "🐳",
+      title: "Isolated Docker Containers",
+      desc: "Every code execution session is securely sandboxed in its own ephemeral Docker container with strict CPU, RAM, and network boundaries for privacy.",
+      tag: "SECURITY"
+    },
+    {
+      icon: "🌐",
+      title: "10+ Pre-Installed Compilers",
+      desc: "Write and execute code instantly in Python 3, Node.js, C++17, C, Java 17, Rust, Go, Ruby, PHP, and Bash without installing anything locally.",
+      tag: "MULTI-LANGUAGE"
+    },
+    {
+      icon: "📱",
+      title: "Universal App & PWA Launcher",
+      desc: "Install Tilde as a standalone app on your laptop or phone. When clicked, it opens directly into the live coding workspace without marketing clutter.",
+      tag: "ACCESSIBILITY"
+    },
+    {
+      icon: "📋",
+      title: "Instant Code Snippet Copy",
+      desc: "Easily copy code from your active editor session or from our curated template library with 1-click clipboard integration.",
+      tag: "PRODUCTIVITY"
+    },
+    {
+      icon: "🛡️",
+      title: "Safe-Area Screen Protection",
+      desc: "Designed with protective bottom padding so your terminal and code editor never touch, clip, or merge into mobile screen edges or laptop taskbars.",
+      tag: "UI / UX"
+    }
+  ];
+
   return (
     <div className="animate-fade-in">
       {/* Hero Section */}
@@ -134,48 +173,48 @@ print("All systems operational. Zero-latency TTY active.")`;
         </div>
       </section>
 
-      {/* Feature Grids */}
+      {/* Merged Architecture & Feature Grids */}
       <section style={{ padding: "80px 0", background: "var(--bg-surface)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
         <div className="marketing-container">
           <div style={{ textAlign: "center", marginBottom: "60px" }}>
-            <h2 style={{ fontSize: "36px", fontWeight: 900, color: "#fff", marginBottom: "16px" }}>
-              Why Developers Choose <span className="hero-gradient-text">Tilde</span>
+            <div className="tilde-badge" style={{ marginBottom: "16px" }}>
+              <span>⚙️ ARCHITECTURE & CAPABILITIES</span>
+            </div>
+            <h2 style={{ fontSize: "38px", fontWeight: 900, color: "#fff", marginBottom: "16px" }}>
+              Engineered for <span className="hero-gradient-text">True Interactivity</span>
             </h2>
-            <p style={{ fontSize: "16px", color: "var(--text-muted)", maxWidth: "600px", margin: "0 auto" }}>
-              Built from the ground up to solve the limitations of traditional web-based code evaluators.
+            <p style={{ fontSize: "17px", color: "var(--text-muted)", maxWidth: "680px", margin: "0 auto", lineHeight: "1.6" }}>
+              Built from the ground up to solve the limitations of traditional web-based code evaluators with live bidirectional streaming and containerized security.
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
-            <div className="glass-card" style={{ padding: "32px" }}>
-              <div style={{ fontSize: "32px", marginBottom: "16px" }}>⚡</div>
-              <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#fff", marginBottom: "12px" }}>
-                True Interactive TTY
-              </h3>
-              <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: "1.6" }}>
-                Unlike static code runners that fail on <code style={{ color: "#38bdf8" }}>input()</code> or <code style={{ color: "#38bdf8" }}>cin</code>, Tilde streams bidirectional WebSockets directly to a live Docker container.
-              </p>
-            </div>
-
-            <div className="glass-card" style={{ padding: "32px" }}>
-              <div style={{ fontSize: "32px", marginBottom: "16px" }}>🐳</div>
-              <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#fff", marginBottom: "12px" }}>
-                Isolated Docker Sandboxes
-              </h3>
-              <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: "1.6" }}>
-                Every code execution spawns in a fresh, hardened Linux container with dedicated CPU, RAM, and network quotas for complete security and privacy.
-              </p>
-            </div>
-
-            <div className="glass-card" style={{ padding: "32px" }}>
-              <div style={{ fontSize: "32px", marginBottom: "16px" }}>📱</div>
-              <h3 style={{ fontSize: "20px", fontWeight: 800, color: "#fff", marginBottom: "12px" }}>
-                Universal PWA Support
-              </h3>
-              <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: "1.6" }}>
-                Install Tilde on your laptop, iPhone, iPad, or Android device. When launched from your home screen, it opens directly into the workspace!
-              </p>
-            </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "28px" }}>
+            {features.map((f, i) => (
+              <div key={i} className="glass-card" style={{ padding: "36px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
+                    <span style={{ fontSize: "36px" }}>{f.icon}</span>
+                    <span style={{
+                      background: "rgba(56, 189, 248, 0.15)",
+                      color: "var(--tilde-cyan)",
+                      padding: "4px 12px",
+                      borderRadius: "12px",
+                      fontSize: "11px",
+                      fontWeight: 800,
+                      letterSpacing: "0.5px"
+                    }}>
+                      {f.tag}
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: "22px", fontWeight: 800, color: "#fff", marginBottom: "14px" }}>
+                    {f.title}
+                  </h3>
+                  <p style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: "1.7" }}>
+                    {f.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

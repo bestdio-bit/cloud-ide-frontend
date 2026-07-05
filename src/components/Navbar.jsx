@@ -11,7 +11,8 @@ export default function Navbar({
   backendUrl,
   setBackendUrl,
   onCheckStatus,
-  onBackToHome
+  onBackToHome,
+  isStandalone
 }) {
   const [showConfig, setShowConfig] = useState(false);
   const [tempUrl, setTempUrl] = useState(backendUrl);
@@ -50,7 +51,8 @@ export default function Navbar({
     }}>
       {/* Brand & Title */}
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        {onBackToHome && (
+        {/* Only show Back to Home if NOT in standalone/downloaded app mode */}
+        {!isStandalone && onBackToHome && (
           <button
             onClick={onBackToHome}
             className="btn btn-secondary"
@@ -60,6 +62,7 @@ export default function Navbar({
             ← Tilde Home
           </button>
         )}
+
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
             background: "linear-gradient(135deg, #38bdf8, #818cf8, #c084fc)",
@@ -77,11 +80,36 @@ export default function Navbar({
             ~
           </div>
           <div>
-            <h1 style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "-0.3px", color: "#fff", margin: 0 }}>
-              Tilde
-            </h1>
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <h1 style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "-0.3px", color: "#fff", margin: 0 }}>
+                Tilde
+              </h1>
+              {/* In standalone/downloaded mode (where back button is removed), display company brand in math power / superscript place! */}
+              {isStandalone && (
+                <span style={{
+                  fontSize: "10px",
+                  color: "var(--tilde-cyan)",
+                  fontWeight: 800,
+                  verticalAlign: "super",
+                  marginLeft: "5px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  background: "rgba(56, 189, 248, 0.12)",
+                  padding: "2px 7px",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(56, 189, 248, 0.3)",
+                  letterSpacing: "0.3px"
+                }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ marginRight: "3px" }}>
+                    <path d="M5 3V15C5 18.866 8.134 22 12 22C15.866 22 19 18.866 19 15C19 11.134 15.866 8 12 8C8.134 8 5 11.134 5 15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                    <path d="M8 15H16C16 13 14.21 11.5 12 11.5C9.79 11.5 8 13 8 15C8 17 9.79 18.5 12 18.5C13.5 18.5 14.8 17.7 15.5 16.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                  </svg>
+                  by bestdio
+                </span>
+              )}
+            </div>
             <span style={{ fontSize: "10px", color: "#38bdf8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              Interactive Workspace
+              {isStandalone ? "Standalone App Workspace" : "Interactive Workspace"}
             </span>
           </div>
         </div>

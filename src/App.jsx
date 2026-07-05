@@ -8,7 +8,6 @@ import MarketingNavbar from "./components/MarketingNavbar";
 import MarketingFooter from "./components/MarketingFooter";
 import DownloadModal from "./components/DownloadModal";
 import LandingPage from "./pages/LandingPage";
-import FeaturesPage from "./pages/FeaturesPage";
 import TemplatesPage from "./pages/TemplatesPage";
 import PricingPage from "./pages/PricingPage";
 import AboutPage from "./pages/AboutPage";
@@ -16,8 +15,10 @@ import DocsPage from "./pages/DocsPage";
 import { STARTER_CODE } from "./constants/languages";
 
 export default function App() {
-  const [currentView, setCurrentView] = useState("landing"); // 'landing' | 'features' | 'templates' | 'pricing' | 'about' | 'docs' | 'ide'
+  const [currentView, setCurrentView] = useState("landing"); // 'landing' | 'templates' | 'pricing' | 'about' | 'docs' | 'ide'
   const [isDownloadOpen, setIsDownloadOpen] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [showSplash, setShowSplash] = useState(false);
   
   const [selectedLang, setSelectedLang] = useState("python");
   const [code, setCode] = useState(STARTER_CODE.python);
@@ -40,12 +41,16 @@ export default function App() {
     window.addEventListener("resize", handleResize);
     
     // Check if launched as installed standalone PWA app or via URL parameter
-    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || 
+    const checkStandalone = window.matchMedia("(display-mode: standalone)").matches || 
                          window.navigator.standalone || 
                          window.location.search.includes("mode=ide") ||
                          window.location.search.includes("view=ide");
-    if (isStandalone) {
+    if (checkStandalone) {
+      setIsStandalone(true);
       setCurrentView("ide");
+      setShowSplash(true);
+      const timer = setTimeout(() => setShowSplash(false), 2200);
+      return () => clearTimeout(timer);
     }
 
     // Capture PWA install prompt event for "Install App" button
@@ -177,8 +182,9 @@ export default function App() {
           onOpenDownload={() => setIsDownloadOpen(true)}
         />
         <main style={{ flex: 1 }}>
-          {currentView === "landing" && <LandingPage setCurrentView={setCurrentView} onOpenDownload={() => setIsDownloadOpen(true)} />}
-          {currentView === "features" && <FeaturesPage setCurrentView={setCurrentView} />}
+          {(currentView === "landing" || currentView === "features") && (
+            <LandingPage setCurrentView={setCurrentView} onOpenDownload={() => setIsDownloadOpen(true)} />
+          )}
           {currentView === "templates" && <TemplatesPage onLaunchTemplate={handleLaunchTemplate} />}
           {currentView === "pricing" && <PricingPage setCurrentView={setCurrentView} />}
           {currentView === "about" && <AboutPage setCurrentView={setCurrentView} />}
@@ -191,9 +197,71 @@ export default function App() {
     );
   }
 
-  // Render Tilde Workspace
+  // Render Tilde Workspace (with animated splash screen when launched as app/standalone)
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-dark)", overflow: "hidden" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-dark)", overflow: "hidden", position: "relative" }}>
+      {/* Animated Startup Splash Screen for Standalone / Downloaded App Mode */}
+      {showSplash && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "#030508",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 99999,
+          animation: "fadeIn 0.3s ease-in"
+        }}>
+          <div className="animate-float" style={{
+            background: "linear-gradient(135deg, #38bdf8, #818cf8, #c084fc)",
+            width: "88px",
+            height: "88px",
+            borderRadius: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "52px",
+            fontWeight: 900,
+            color: "#000",
+            marginBottom: "28px",
+            boxShadow: "0 0 60px rgba(56, 189, 248, 0.6)"
+          }}>
+            ~
+          </div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+            <h1 style={{ fontSize: "40px", fontWeight: 900, color: "#fff", margin: 0, letterSpacing: "-1.5px" }}>
+              Tilde
+            </h1>
+            <span style={{
+              fontSize: "14px",
+              color: "var(--tilde-cyan)",
+              fontWeight: 800,
+              verticalAlign: "super",
+              display: "inline-flex",
+              alignItems: "center",
+              background: "rgba(56, 189, 248, 0.15)",
+              padding: "4px 10px",
+              borderRadius: "14px",
+              border: "1px solid rgba(56, 189, 248, 0.35)",
+              letterSpacing: "0.5px"
+            }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ marginRight: "4px" }}>
+                <path d="M5 3V15C5 18.866 8.134 22 12 22C15.866 22 19 18.866 19 15C19 11.134 15.866 8 12 8C8.134 8 5 11.134 5 15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M8 15H16C16 13 14.21 11.5 12 11.5C9.79 11.5 8 13 8 15C8 17 9.79 18.5 12 18.5C13.5 18.5 14.8 17.7 15.5 16.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              </svg>
+              by bestdio
+            </span>
+          </div>
+          <p style={{ color: "var(--text-muted)", fontSize: "14px", marginTop: "16px", fontFamily: "var(--font-mono)" }}>
+            ⚡ Initializing Zero-Latency Cloud Workspace...
+          </p>
+        </div>
+      )}
+
       {/* Top Navbar */}
       <Navbar
         selectedLang={selectedLang}
@@ -206,6 +274,7 @@ export default function App() {
         setBackendUrl={setBackendUrl}
         onCheckStatus={checkServerStatus}
         onBackToHome={() => setCurrentView("landing")}
+        isStandalone={isStandalone}
       />
 
       {/* Mobile Tab Switcher */}

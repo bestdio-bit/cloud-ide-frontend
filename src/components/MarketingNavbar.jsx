@@ -3,7 +3,6 @@ import React from "react";
 export default function MarketingNavbar({ currentView, setCurrentView, onOpenDownload }) {
   const navItems = [
     { id: "landing", label: "Overview" },
-    { id: "features", label: "Features" },
     { id: "templates", label: "Templates" },
     { id: "pricing", label: "Pricing" },
     { id: "docs", label: "Docs" },

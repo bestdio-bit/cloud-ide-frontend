@@ -49,7 +49,6 @@ export default function MarketingFooter({ setCurrentView }) {
           <h4 style={{ color: "#fff", fontSize: "14px", fontWeight: 700, marginBottom: "16px" }}>Workspace</h4>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
             <li><button onClick={() => setCurrentView("ide")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Launch IDE ⚡</button></li>
-            <li><button onClick={() => setCurrentView("features")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Architecture</button></li>
             <li><button onClick={() => setCurrentView("templates")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Starter Code</button></li>
             <li><button onClick={() => setCurrentView("pricing")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", padding: 0 }}>Pricing & Quotas</button></li>
           </ul>
