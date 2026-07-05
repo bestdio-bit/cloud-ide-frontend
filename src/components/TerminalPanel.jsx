@@ -8,6 +8,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
   const fitAddonRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [customInput, setCustomInput] = useState("");
 
   useEffect(() => {
     if (!terminalRef.current) return;
@@ -70,7 +71,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
     // Welcome Header
     term.writeln("\x1b[1;36m=================================================================\x1b[0m");
     term.writeln("\x1b[1;32m ⚡ Tilde Interactive Cloud Sandbox (Xterm.js + node-pty TTY)\x1b[0m");
-    term.writeln("\x1b[38;5;245m    Type directly below or use the quick-access helper toolbar!\x1b[0m");
+    term.writeln("\x1b[38;5;245m    Type directly below or use the realtime stdin box & quick keys!\x1b[0m");
     term.writeln("\x1b[1;36m=================================================================\x1b[0m\r\n");
 
     // Forward keystrokes from Xterm.js to Socket.io backend
@@ -83,7 +84,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
     // Handle window resizing and mobile keyboard viewport changes
     window.addEventListener("resize", fitTerminal);
 
-    // ResizeObserver to automatically resize xterm when container height changes (e.g. mobile keyboard or split drag)
+    // ResizeObserver to automatically resize xterm when container height changes
     let observer;
     if (window.ResizeObserver && terminalRef.current) {
       observer = new ResizeObserver(() => fitTerminal());
@@ -158,6 +159,17 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
     }
   };
 
+  // Send Realtime Stdin (Verto-inspired mobile input handling)
+  const handleSendStdin = (e) => {
+    if (e) e.preventDefault();
+    if (!customInput && customInput !== "") return;
+    if (socket && socket.connected) {
+      socket.emit("terminal_input", customInput + "\r");
+      setCustomInput("");
+      if (xtermRef.current) xtermRef.current.focus();
+    }
+  };
+
   const getStatusBadge = () => {
     if (running) return { text: "⟳ Running...", color: "#000", bg: "var(--accent-cyan)" };
     switch (executionStatus) {
@@ -200,15 +212,15 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
       height: "100%",
       position: "relative"
     }}>
-      {/* Terminal Navbar (Top Row: Status & Actions) */}
+      {/* Terminal Navbar / Header (Top Row: Status & Actions) */}
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         background: "var(--bg-surface)",
         borderBottom: "1px solid var(--border)",
-        padding: "6px 14px",
-        minHeight: "40px",
+        padding: "8px 16px",
+        minHeight: "42px",
         flexShrink: 0,
         gap: "8px",
         flexWrap: "wrap"
@@ -216,7 +228,7 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
         <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
           <span style={{ fontSize: "14px" }}>🖥️</span>
           <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-main)", fontFamily: "var(--font-mono)", whiteSpace: "nowrap" }}>
-            Tilde TTY
+            Interactive Execution Terminal
           </span>
           <span style={{
             background: badge.bg,
@@ -330,6 +342,76 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
           height: "100%"
         }}
       />
+
+      {/* Verto-Inspired Realtime Stdin / Interactive Input Bar (For Mobile & Desktop input) */}
+      <div style={{
+        padding: "10px 14px",
+        background: "var(--bg-surface)",
+        borderTop: "1px solid var(--border)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "6px",
+        flexShrink: 0
+      }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "11px", color: "var(--text-muted)" }}>
+          <span style={{ fontWeight: 700, color: "var(--tilde-cyan)", display: "flex", alignItems: "center", gap: "6px" }}>
+            <span>⌨️ Realtime Stdin / Input:</span>
+          </span>
+          <span style={{ fontSize: "10px", color: "var(--text-faint)" }}>For cin, scanf, input(), prompt()</span>
+        </div>
+        <form onSubmit={handleSendStdin} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <input
+            type="text"
+            value={customInput}
+            onChange={(e) => setCustomInput(e.target.value)}
+            placeholder="Type interactive input here & click Send..."
+            style={{
+              flex: 1,
+              background: "var(--bg-dark)",
+              border: "1px solid var(--border)",
+              borderRadius: "8px",
+              color: "var(--tilde-cyan)",
+              fontFamily: "var(--font-mono)",
+              fontSize: "13px",
+              padding: "8px 12px",
+              outline: "none"
+            }}
+          />
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{
+              padding: "8px 16px",
+              fontSize: "12px",
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              flexShrink: 0,
+              borderRadius: "8px"
+            }}
+          >
+            <span>⚡</span> Send
+          </button>
+          {customInput && (
+            <button
+              type="button"
+              onClick={() => setCustomInput("")}
+              style={{
+                padding: "8px 10px",
+                fontSize: "11px",
+                background: "var(--bg-dark)",
+                border: "1px solid var(--border)",
+                color: "var(--text-muted)",
+                borderRadius: "8px",
+                cursor: "pointer"
+              }}
+            >
+              ✕
+            </button>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

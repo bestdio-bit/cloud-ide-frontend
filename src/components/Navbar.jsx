@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import { LANGUAGES } from "../constants/languages";
 
 export default function Navbar({
-  selectedLang,
-  setSelectedLang,
-  onRun,
-  onKill,
-  running,
   serverStatus,
   backendUrl,
   setBackendUrl,
@@ -44,24 +38,27 @@ export default function Navbar({
       flexDirection: "column",
       position: "sticky",
       top: 0,
-      zIndex: 100
+      zIndex: 1000,
+      borderBottom: "1px solid var(--border)",
+      background: "rgba(8, 12, 20, 0.9)",
+      backdropFilter: "blur(16px)"
     }}>
       <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "10px 18px",
-        flexWrap: "nowrap",
-        gap: "10px"
+        padding: "10px 20px",
+        minHeight: "60px",
+        gap: "12px"
       }}>
         {/* Brand & Title */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "14px", minWidth: 0 }}>
           {/* Only show Back to Home on Desktop if NOT in standalone/downloaded app mode */}
           {!isStandalone && onBackToHome && (
             <button
               onClick={onBackToHome}
               className="btn btn-secondary desktop-only-flex"
-              style={{ padding: "6px 12px", fontSize: "12px", borderRadius: "8px", fontWeight: 700, borderColor: "var(--tilde-cyan)", color: "var(--tilde-cyan)", flexShrink: 0 }}
+              style={{ padding: "6px 14px", fontSize: "12px", borderRadius: "8px", fontWeight: 700, borderColor: "var(--tilde-cyan)", color: "var(--tilde-cyan)", flexShrink: 0 }}
               title="Return to Tilde Marketing Home"
             >
               ← Tilde Home
@@ -87,21 +84,21 @@ export default function Navbar({
             </div>
             <div style={{ minWidth: 0 }}>
               <div style={{ display: "flex", alignItems: "baseline" }}>
-                <h1 style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "-0.3px", color: "#fff", margin: 0 }}>
+                <h1 style={{ fontSize: "20px", fontWeight: 900, letterSpacing: "-0.5px", color: "#fff", margin: 0 }}>
                   Tilde
                 </h1>
-                {/* In standalone/downloaded mode (where back button is removed), display company brand in math power / superscript place! */}
+                {/* In standalone/downloaded mode, display Bestdio brand in superscript exponent place! */}
                 {isStandalone && (
                   <span style={{
                     fontSize: "10px",
                     color: "var(--tilde-cyan)",
                     fontWeight: 800,
                     verticalAlign: "super",
-                    marginLeft: "5px",
+                    marginLeft: "6px",
                     display: "inline-flex",
                     alignItems: "center",
                     background: "rgba(56, 189, 248, 0.12)",
-                    padding: "2px 7px",
+                    padding: "2px 8px",
                     borderRadius: "10px",
                     border: "1px solid rgba(56, 189, 248, 0.3)",
                     letterSpacing: "0.3px",
@@ -115,67 +112,19 @@ export default function Navbar({
                   </span>
                 )}
               </div>
-              <span className="desktop-only-flex" style={{ fontSize: "10px", color: "#38bdf8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                {isStandalone ? "Standalone App Workspace" : "Interactive Workspace"}
+              <span className="desktop-only-flex" style={{ fontSize: "11px", color: "#38bdf8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                {isStandalone ? "Standalone Cloud Workspace" : "v2.0 Interactive Workspace"}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Language Selector (Always visible on mobile & desktop) */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "var(--bg-surface)", padding: "4px 10px", borderRadius: "10px", border: "1px solid var(--border)", flexShrink: 0 }}>
-          <span className="desktop-only-flex" style={{ fontSize: "12px", color: "var(--text-muted)", fontWeight: 600 }}>Language:</span>
-          <select
-            value={selectedLang}
-            onChange={(e) => setSelectedLang(e.target.value)}
-            disabled={running}
-            style={{
-              background: "transparent",
-              border: "none",
-              color: "var(--text-main)",
-              fontWeight: 700,
-              fontSize: "13px",
-              padding: "4px 2px",
-              cursor: running ? "not-allowed" : "pointer",
-              outline: "none"
-            }}
-          >
-            {LANGUAGES.map((l) => (
-              <option key={l.id} value={l.id} style={{ background: "var(--bg-surface)", color: "var(--text-main)" }}>
-                {l.icon} {l.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Right Controls: Run button, Desktop Kill & Server status, Mobile Toggle */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
-          <button
-            onClick={onRun}
-            disabled={running}
-            className="btn btn-primary"
-            style={{ padding: "8px 16px", fontWeight: 800, fontSize: "13px" }}
-            title="Compile and run in cloud terminal"
-          >
-            <span className={running ? "animate-spin" : ""} style={{ fontSize: "14px", marginRight: "4px" }}>
-              {running ? "⟳" : "▶"}
-            </span>
-            {running ? "Running..." : "Run"}
-          </button>
-
-          <button
-            onClick={onKill}
-            className="btn btn-danger desktop-only-flex"
-            style={{ padding: "8px 14px", fontSize: "13px", fontWeight: 700 }}
-            title="Terminate active terminal process"
-          >
-            ■ Clear / Kill
-          </button>
-
+        {/* Right Controls: Server status badge & Mobile Menu Toggle */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
           <button
             onClick={() => { setTempUrl(backendUrl); setShowConfig(true); }}
-            className="desktop-only-flex"
             style={{
+              display: "flex",
               alignItems: "center",
               gap: "8px",
               background: badge.bg,
@@ -194,29 +143,29 @@ export default function Navbar({
             <span style={{ opacity: 0.8, fontSize: "10px" }}>⚙️</span>
           </button>
 
-          {/* Mobile Menu Toggle Button (Verto-Inspired) */}
+          {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="mobile-only-flex"
             style={{
               display: "none",
-              padding: "8px 10px",
+              padding: "8px 12px",
               background: "rgba(255, 255, 255, 0.05)",
               border: "1px solid var(--border)",
               borderRadius: "8px",
               color: "#fff",
-              fontSize: "16px",
+              fontSize: "18px",
               cursor: "pointer",
               transition: "all 0.2s"
             }}
             title="More Options"
           >
-            {mobileMenuOpen ? "✕" : "⋮"}
+            {mobileMenuOpen ? "✕" : "☰"}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown Bar for IDE Workspace */}
+      {/* Mobile Menu Dropdown Bar */}
       {mobileMenuOpen && (
         <div className="animate-fade-in mobile-only-flex" style={{
           display: "none",
@@ -224,34 +173,21 @@ export default function Navbar({
           gap: "8px",
           background: "var(--bg-surface)",
           borderTop: "1px solid var(--border)",
-          padding: "12px 18px",
+          padding: "14px 20px",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.6)"
         }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+          {!isStandalone && onBackToHome && (
             <button
               onClick={() => {
-                onKill();
+                onBackToHome();
                 setMobileMenuOpen(false);
               }}
-              className="btn btn-danger"
-              style={{ flex: 1, padding: "10px", fontSize: "13px", fontWeight: 700, justifyContent: "center" }}
+              className="btn btn-secondary"
+              style={{ width: "100%", padding: "12px", fontSize: "14px", fontWeight: 700, justifyContent: "center", borderColor: "var(--tilde-cyan)", color: "var(--tilde-cyan)" }}
             >
-              ■ Clear / Kill Terminal
+              ← Return to Tilde Marketing Home
             </button>
-
-            {!isStandalone && onBackToHome && (
-              <button
-                onClick={() => {
-                  onBackToHome();
-                  setMobileMenuOpen(false);
-                }}
-                className="btn btn-secondary"
-                style={{ flex: 1, padding: "10px", fontSize: "13px", fontWeight: 700, justifyContent: "center", borderColor: "var(--tilde-cyan)", color: "var(--tilde-cyan)" }}
-              >
-                ← Return Home
-              </button>
-            )}
-          </div>
+          )}
 
           <button
             onClick={() => {
@@ -266,9 +202,9 @@ export default function Navbar({
               background: badge.bg,
               color: badge.color,
               border: `1px solid ${badge.color}`,
-              padding: "10px 14px",
+              padding: "12px 16px",
               borderRadius: "10px",
-              fontSize: "13px",
+              fontSize: "14px",
               fontWeight: 700,
               cursor: "pointer",
               width: "100%"
@@ -293,7 +229,7 @@ export default function Navbar({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          zIndex: 1000,
+          zIndex: 9999,
           padding: "20px"
         }} className="animate-fade-in">
           <div style={{

@@ -12,7 +12,7 @@ import TemplatesPage from "./pages/TemplatesPage";
 import PricingPage from "./pages/PricingPage";
 import AboutPage from "./pages/AboutPage";
 import DocsPage from "./pages/DocsPage";
-import { STARTER_CODE } from "./constants/languages";
+import { LANGUAGES, STARTER_CODE } from "./constants/languages";
 
 export default function App() {
   const [currentView, setCurrentView] = useState("landing"); // 'landing' | 'templates' | 'pricing' | 'about' | 'docs' | 'ide'
@@ -199,11 +199,6 @@ export default function App() {
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-dark)", overflow: "hidden", position: "relative" }}>
       {/* Top Navbar */}
       <Navbar
-        selectedLang={selectedLang}
-        setSelectedLang={handleLanguageChange}
-        onRun={handleRunCode}
-        onKill={handleKillCode}
-        running={running}
         serverStatus={serverStatus}
         backendUrl={backendUrl}
         setBackendUrl={setBackendUrl}
@@ -211,6 +206,95 @@ export default function App() {
         onBackToHome={() => setCurrentView("landing")}
         isStandalone={isStandalone}
       />
+
+      {/* Dedicated Verto-Inspired IDE Toolbar */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "8px 18px",
+        background: "var(--bg-surface)",
+        borderBottom: "1px solid var(--border)",
+        flexShrink: 0,
+        flexWrap: "wrap",
+        gap: "10px"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <span style={{ fontSize: "13px", fontWeight: 700, color: "var(--text-muted)" }}>Language:</span>
+          <select
+            value={selectedLang}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            disabled={running}
+            style={{
+              background: "var(--bg-raised)",
+              border: "1px solid var(--border)",
+              color: "var(--text-main)",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              fontWeight: 700,
+              fontSize: "13px",
+              cursor: running ? "not-allowed" : "pointer",
+              outline: "none"
+            }}
+          >
+            {LANGUAGES.map((l) => (
+              <option key={l.id} value={l.id} style={{ background: "var(--bg-surface)", color: "var(--text-main)" }}>
+                {l.icon} {l.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(code);
+              alert("Code copied to clipboard!");
+            }}
+            className="btn btn-secondary"
+            style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700 }}
+            title="Copy current editor code"
+          >
+            📋 Copy Code
+          </button>
+          <button
+            onClick={() => setCode("")}
+            className="btn btn-secondary"
+            style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700 }}
+            title="Clear editor code"
+          >
+            🗑️ Clear
+          </button>
+          {running && (
+            <button
+              onClick={handleKillCode}
+              className="btn btn-danger"
+              style={{ padding: "6px 12px", fontSize: "12px", fontWeight: 700 }}
+              title="Terminate active process"
+            >
+              ■ Kill
+            </button>
+          )}
+          <button
+            onClick={handleRunCode}
+            disabled={running}
+            className="btn btn-primary"
+            style={{
+              padding: "6px 18px",
+              fontSize: "13px",
+              fontWeight: 800,
+              opacity: running ? 0.7 : 1,
+              cursor: running ? "not-allowed" : "pointer"
+            }}
+            title="Compile and run in cloud terminal"
+          >
+            <span className={running ? "animate-spin" : ""} style={{ fontSize: "14px", marginRight: "6px" }}>
+              {running ? "⟳" : "▶"}
+            </span>
+            {running ? "Executing..." : "Run Code"}
+          </button>
+        </div>
+      </div>
 
       {/* Mobile Tab Switcher */}
       {!isDesktop && (
