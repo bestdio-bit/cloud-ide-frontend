@@ -283,16 +283,21 @@ export default function App() {
           >
             🗑️ Clear
           </button>
-          {running && (
-            <button
-              onClick={handleKillCode}
-              className="btn btn-danger"
-              style={{ padding: isDesktop ? "6px 12px" : "5px 10px", fontSize: isDesktop ? "12px" : "11px", fontWeight: 700 }}
-              title="Terminate active process"
-            >
-              ■ Kill
-            </button>
-          )}
+          <button
+            onClick={handleKillCode}
+            disabled={!running}
+            className="btn btn-danger"
+            style={{
+              padding: isDesktop ? "6px 12px" : "5px 10px",
+              fontSize: isDesktop ? "12px" : "11px",
+              fontWeight: 700,
+              opacity: running ? 1 : 0.4,
+              cursor: running ? "pointer" : "not-allowed"
+            }}
+            title="Terminate active process"
+          >
+            ■ Kill
+          </button>
           <button
             onClick={handleRunCode}
             disabled={running}
@@ -386,6 +391,7 @@ export default function App() {
               executionStatus={executionStatus}
               executionTime={executionTime}
               onClearStatus={() => setExecutionStatus("ready")}
+              onKill={handleKillCode}
             />
           </div>
         )}

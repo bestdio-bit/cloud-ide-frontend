@@ -81,7 +81,7 @@ export default function DocsPage({ setCurrentView }) {
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px", fontSize: "14px", color: "var(--text-main)" }}>
             <li>• <strong>RAM Allocation:</strong> 512 MB maximum memory per container.</li>
             <li>• <strong>CPU Quota:</strong> 50% single-core processing cap.</li>
-            <li>• <strong>Execution Timeout:</strong> Process execution automatically terminates after 60 seconds of inactivity or infinite loop.</li>
+            <li>• <strong>Long-Running Execution:</strong> Continuous execution without automatic timeouts, enabling interactive terminal games and TTY apps.</li>
           </ul>
         </div>
 

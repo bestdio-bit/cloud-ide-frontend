@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 
-export default function TerminalPanel({ socket, running, executionStatus, executionTime, onClearStatus }) {
+export default function TerminalPanel({ socket, running, executionStatus, executionTime, onClearStatus, onKill }) {
   const terminalRef = useRef(null);
   const xtermRef = useRef(null);
   const fitAddonRef = useRef(null);
@@ -151,14 +151,6 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
     });
   };
 
-  // Send quick helper keys (for mobile keyboard accessibility)
-  const sendKey = (seq) => {
-    if (socket && socket.connected) {
-      socket.emit("terminal_input", seq);
-      if (xtermRef.current) xtermRef.current.focus();
-    }
-  };
-
   const getStatusBadge = () => {
     if (running) return { text: "⟳ Running...", color: "#000", bg: "var(--accent-cyan)" };
     switch (executionStatus) {
@@ -176,19 +168,6 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
   };
 
   const badge = getStatusBadge();
-
-  // Quick helper keys for mobile terminal accessibility
-  const quickKeys = [
-    { label: "ESC", seq: "\x1b", title: "Escape key" },
-    { label: "TAB", seq: "\t", title: "Tab completion" },
-    { label: "↑", seq: "\x1b[A", title: "Previous command history" },
-    { label: "↓", seq: "\x1b[B", title: "Next command history" },
-    { label: "CTRL+C", seq: "\x03", title: "Send Interrupt / SIGINT", danger: true },
-    { label: "~", seq: "~", title: "Tilde character" },
-    { label: "/", seq: "/", title: "Slash character" },
-    { label: "-", seq: "-", title: "Hyphen character" },
-    { label: "ENTER", seq: "\r", title: "Return / Enter key", primary: true },
-  ];
 
   return (
     <div style={{
@@ -240,93 +219,78 @@ export default function TerminalPanel({ socket, running, executionStatus, execut
           </span>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
           {executionTime != null && (
-            <span style={{ fontSize: "11px", color: "var(--tilde-cyan)", fontFamily: "var(--font-mono)", fontWeight: 700 }}>
+            <span style={{ fontSize: "11px", color: "var(--tilde-cyan)", fontFamily: "var(--font-mono)", fontWeight: 700, marginRight: "4px" }}>
               ⏱️ {executionTime}s
             </span>
           )}
-          {window.innerWidth >= 768 && (
-            <>
-              <button
-                onClick={handleCopyOutput}
-                style={{
-                  background: copied ? "rgba(16, 185, 129, 0.2)" : "rgba(255, 255, 255, 0.05)",
-                  border: copied ? "1px solid var(--accent-green)" : "1px solid var(--border)",
-                  color: copied ? "var(--accent-green)" : "var(--text-main)",
-                  padding: "4px 10px",
-                  borderRadius: "6px",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  transition: "all 0.2s",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px"
-                }}
-                title="Copy terminal output to clipboard"
-              >
-                {copied ? "✓ Copied" : "📋 Copy Log"}
-              </button>
-              <button
-                onClick={handleClearTerminal}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "var(--text-muted)",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  textDecoration: "underline"
-                }}
-                title="Clear terminal screen"
-              >
-                🗑️ Clear
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* Terminal Navbar (Bottom Row: Quick-Access Mobile Helper Toolbar) */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "6px",
-        background: "#050810",
-        borderBottom: "1px solid var(--border)",
-        padding: "6px 12px",
-        overflowX: "auto",
-        whiteSpace: "nowrap",
-        flexShrink: 0,
-        WebkitOverflowScrolling: "touch"
-      }}>
-        <span style={{ fontSize: "10px", color: "var(--tilde-cyan)", fontWeight: 800, marginRight: "4px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-          ⚡ KEYS:
-        </span>
-        {quickKeys.map((key, idx) => (
           <button
-            key={idx}
-            onClick={() => sendKey(key.seq)}
+            onClick={handleCopyOutput}
             style={{
-              background: key.danger ? "rgba(248, 113, 113, 0.15)" : key.primary ? "linear-gradient(135deg, rgba(56,189,248,0.25), rgba(129,140,248,0.25))" : "#0e1626",
-              border: key.danger ? "1px solid rgba(248, 113, 113, 0.4)" : key.primary ? "1px solid var(--tilde-cyan)" : "1px solid rgba(255, 255, 255, 0.12)",
-              color: key.danger ? "#f87171" : key.primary ? "#38bdf8" : "#f8fafc",
+              background: copied ? "rgba(16, 185, 129, 0.2)" : "rgba(255, 255, 255, 0.05)",
+              border: copied ? "1px solid var(--accent-green)" : "1px solid var(--border)",
+              color: copied ? "var(--accent-green)" : "var(--text-main)",
               padding: "4px 10px",
               borderRadius: "6px",
               fontSize: "11px",
-              fontFamily: "var(--font-mono)",
               fontWeight: 700,
               cursor: "pointer",
-              flexShrink: 0,
-              boxShadow: key.primary ? "0 0 10px rgba(56, 189, 248, 0.2)" : "0 2px 4px rgba(0,0,0,0.3)",
-              transition: "all 0.15s"
+              transition: "all 0.2s",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px"
             }}
-            title={key.title}
+            title="Copy terminal output to clipboard"
           >
-            {key.label}
+            {copied ? "✓ Copied" : "📋 Copy Log"}
           </button>
-        ))}
+          <button
+            onClick={handleClearTerminal}
+            style={{
+              background: "rgba(255, 255, 255, 0.05)",
+              border: "1px solid var(--border)",
+              color: "var(--text-main)",
+              padding: "4px 10px",
+              borderRadius: "6px",
+              fontSize: "11px",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "all 0.2s",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px"
+            }}
+            title="Clear terminal screen"
+          >
+            🗑️ Clear
+          </button>
+          <button
+            onClick={() => {
+              if (onKill) onKill();
+              else if (socket && socket.connected) socket.emit("kill_terminal");
+            }}
+            disabled={!running}
+            style={{
+              background: running ? "rgba(248, 113, 113, 0.2)" : "rgba(255, 255, 255, 0.03)",
+              border: running ? "1px solid var(--accent-red)" : "1px solid var(--border)",
+              color: running ? "var(--accent-red)" : "var(--text-faint)",
+              padding: "4px 10px",
+              borderRadius: "6px",
+              fontSize: "11px",
+              fontWeight: 700,
+              cursor: running ? "pointer" : "not-allowed",
+              transition: "all 0.2s",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              opacity: running ? 1 : 0.5
+            }}
+            title="Terminate active process"
+          >
+            ■ Kill
+          </button>
+        </div>
       </div>
 
       {/* Xterm.js Container */}

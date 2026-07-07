@@ -57,7 +57,7 @@ export default function AboutPage({ setCurrentView }) {
                 <span style={{ color: "var(--tilde-indigo)" }}>2.</span> Ephemeral Docker Sandbox Orchestration
               </h3>
               <p style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: "1.7", margin: 0 }}>
-                To guarantee security and isolation, every execution session dynamically spawns an ephemeral Docker container running a hardened Linux Alpine/Debian environment. Each container is strictly quarantined with dedicated memory ceilings (512 MB RAM), CPU throttling, and automated 60-second idle timeouts to prevent runaway processes or resource exhaustion.
+                To guarantee security and isolation, every execution session dynamically spawns an ephemeral Docker container running a hardened Linux Alpine/Debian environment. Each container is strictly quarantined with dedicated memory ceilings (512 MB RAM) and CPU throttling while supporting continuous, long-running interactive terminal sessions.
               </p>
             </div>
 
